@@ -15,9 +15,9 @@ return [
     // +----------------------------------------------------------------------
 
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -122,8 +122,6 @@ return [
     'template'               => [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
-        // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
-        'auto_rule'    => 1,
         // 模板路径
         'view_path'    => '',
         // 模板后缀
