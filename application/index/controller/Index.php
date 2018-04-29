@@ -15,7 +15,7 @@ class Index extends Controller
     {
     	$vid=input("param.vid");
     	$current=Db::table('log')->where('vid',$vid)
-    		->whereTime('uploaddate','-1 hours')->select();
+    		->whereTime('uploaddate','-1 minutes')->select();
     	if(empty($current)){
     		$result['online']=false;
     	}
@@ -28,14 +28,14 @@ class Index extends Controller
     }
 
     public function getBattery($vid){
-    	$res=Db::query("select *,max(uploaddate) from log where vid='$vid'");
+    	$res=Db::query("select * from log where vid='$vid' and uploaddate=(select max(uploaddate) from log)");
     	$battery=$res[0]['battery'];
     	return $battery;
     }
 
     public function getMeditation($vid){
 		$current=Db::table('log')->where('vid',$vid)
-    		->whereTime('uploaddate','-1 hours')->select();
+    		->whereTime('uploaddate','-1 minutes')->select();
     	$meditation=$current[0]['Meditation'];
     	if($meditation<=40)
     		$res="疲劳";
