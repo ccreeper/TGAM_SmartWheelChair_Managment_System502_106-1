@@ -258,6 +258,7 @@
     function UpdateOnline(vid){
         $.getJSON(
             "{:url('isOnline')}",{"vid":"asdsdcz1314123ac"},function(json){
+                // alert(json.online);
                 if(json.online==true){
                     $("#line_img").attr("src","__STATIC__/assets/img/shortcuts/online.png");
                     $("#line_msg").html("在线");
