@@ -46,13 +46,13 @@ class Home extends Controller
 		return $res;
 	}
 
-	public function getBpm(){
+	public function getLog(){
 		$vid=input("param.vid");
-		$res=Db::table('log')->where('vid',$vid)->field('bpm')
+		$res=Db::table('log')->where('vid',$vid)->field('bpm,speed')
 		->order('uploaddate desc')->limit(50)->select();
 		echo json_encode($res);
 	}
-
+	
 	public function insertData(){
 		$random_lat=self::randomFloat(20,50);
 		$random_lon=self::randomFloat(20,50);

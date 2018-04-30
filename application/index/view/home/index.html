@@ -170,15 +170,16 @@
             }
         }
     });
+
     var ctx = document.getElementById("speedChart");
     var speedLabel= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
-    var speedValue=[20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,];
+    var speedValue=[];
     var speedChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: speedLabel,
             datasets: [{
-                label: '脉搏',
+                label: '车速',
                 data: speedValue,
                 backgroundColor:'rgba(255, 99, 132, 0.2)',
                 borderWidth: 1
@@ -199,20 +200,24 @@
             }
         }
     });
+
     function UpdateChart(vid){
         $.ajax({
             type:"get",
-            url:"{:url('getBpm?vid=asdsdcz1314123ac')}",
+            url:"{:url('getLog?vid=asdsdcz1314123ac')}",
             dataType:"json",
             success:function(result){
                 $.each(result,function(i,item){
                     // alert(item.bpm);
                     bpmValue[i]=item.bpm;
+                    speedValue[i]=item.speed;
                 });
                 bpmValue.reverse();
+                speedValue.reverse();
             }
         });
         bpmChart.update();
+        speedChart.update();
     }
 
     function InsertData(){
