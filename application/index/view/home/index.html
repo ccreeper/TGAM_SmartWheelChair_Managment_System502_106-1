@@ -88,7 +88,7 @@
                         <div class="tile">
                             <h2 class="tile-title">脉搏状况</h2>
                             <div>
-                                <canvas id="speedChart" style="height: 200px;width: 700px"></canvas>
+                                <canvas id="bpmChart" style="height: 200px;width: 700px"></canvas>
                             </div>
                         </div>
 
@@ -104,12 +104,10 @@
                     <div class="col-md-8">
                         <!-- Dynamic Chart -->
                         <div class="tile">
-                            <h2 class="tile-title">Server Process</h2>
-                            
-                            <div class="p-t-10 p-r-5 p-b-5">
-                                <div id="dynamic-chart" style="height: 200px"></div>
+                            <h2 class="tile-title">车速</h2>
+                            <div>
+                                <canvas id="speedChart" style="height: 200px;width: 700px"></canvas>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -143,16 +141,45 @@
             );
     }
 
-    var ctx = document.getElementById("speedChart");
-    var label= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
-    var value=[];
-    var myChart = new Chart(ctx, {
+    var ctx = document.getElementById("bpmChart");
+    var bpmLabel= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
+    var bpmValue=[];
+    var bpmChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: label,
+            labels: bpmLabel,
             datasets: [{
                 label: '脉搏',
-                data: value,
+                data: bpmValue,
+                backgroundColor:'rgba(255, 99, 132, 0.2)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            elements: {
+                line: {
+                    tension: 0, 
+                }
+            }
+        }
+    });
+    var ctx = document.getElementById("speedChart");
+    var speedLabel= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
+    var speedValue=[20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,20,52,12,34,68,10,20,52,12,34,];
+    var speedChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: speedLabel,
+            datasets: [{
+                label: '脉搏',
+                data: speedValue,
                 backgroundColor:'rgba(255, 99, 132, 0.2)',
                 borderWidth: 1
             }]
@@ -180,12 +207,12 @@
             success:function(result){
                 $.each(result,function(i,item){
                     // alert(item.bpm);
-                    value[i]=item.bpm;
+                    bpmValue[i]=item.bpm;
                 });
-                value.reverse();
+                bpmValue.reverse();
             }
         });
-        myChart.update();
+        bpmChart.update();
     }
 
     function InsertData(){
