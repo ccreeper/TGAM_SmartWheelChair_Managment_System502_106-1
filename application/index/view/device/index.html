@@ -62,7 +62,7 @@
                         </thead>
                         <tbody>
                             {volist name="devices" id="dev"}
-                            <tr>
+                            <tr class="tr{$dev.id} <?php if($dev['track']==1) echo ' selected'; ?>">
                                 <td>{$dev.vid}</td>
                                 <td>{$dev.vname}</td>
                                 <td>{$dev.pdate}</td>
@@ -75,8 +75,8 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Edit</a></li>
                                             <li><a href="{:url('device/delete',['vid'=>$dev.vid])}" onClick="return confirm('确认删除？')">Delete</a></li>
+                                            <li><a href="#" onclick="setTrack('{$dev.vid}','{$dev.id}')">Track</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -95,19 +95,41 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">新增设备关联</h4>
                 </div>
                 <div class="modal-body">
+                    <form class="form-horizontal" action="{:url('add')}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="inputUser" class="col-md-2 control-label">设备号:  </label>
+                            <div  class="col-md-6">
+                              <input type="text" class="form-control" id="inputUser" placeholder="设备号" name="vid"> 
+                          </div>
+                      </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm">提交</button>
-                    <button type="button" class="btn btn-sm" data-dismiss="modal">关闭</button>
-                </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm">提交</button>
+                        <button type="reset" class="btn btn-sm">重置</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    {include file="public:footer"/}
+</div>
+{include file="public:footer"/}
+<script type="text/javascript">
+    function setTrack(vid,id){
+        $.ajax({
+            type:"get",
+            url:"{:url('track')}",
+            data:{vid:vid},
+            dataType:"json",
+            success:function(result){
+                $("tr").removeClass("selected");
+                $(".tr"+id).addClass("selected");
+            }
+        });
+    }
+</script>
 </body>
 </html>
 

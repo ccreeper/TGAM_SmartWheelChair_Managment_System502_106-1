@@ -1,10 +1,89 @@
 <?php
 namespace app\index\controller;
+use think\Controller;
+use think\Db;
+use think\Session;
 
-class Index
+class Index extends Controller
 {
-    public function index()
-    {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_bd568ce7058a1091"></thinkad>';
-    }
+	public function index()
+	{
+		return $this->fetch();
+	}
+
+	public function getStatus(){
+		$vid=input("param.vid");
+		$result['online']=self::isOnline($vid);
+		if($result['online'])
+			$result['meditation']=self::getMeditation($vid);
+		$result['battery']=self::getBattery($vid);
+		echo json_encode($result);
+	}
+
+	public function isOnline($vid)
+	{
+		$current=Db::table('log')->where('vid',$vid)
+		->whereTime('uploaddate','-1 minutes')->select();
+		if(empty($current))
+			return false;
+		return true;
+	}
+
+	public function getBattery($vid){
+		$res=Db::query("select * from log where vid='$vid' and uploaddate=(select max(uploaddate) from log)");
+		$battery=$res[0]['battery'];
+		return $battery;
+	}
+
+	public function getMeditation($vid){
+		$current=Db::table('log')->where('vid',$vid)
+		->whereTime('uploaddate','-1 minutes')->select();
+		$meditation=$current[0]['Meditation'];
+		if($meditation<=40)
+			$res="疲劳";
+		else if($meditation<=70)
+			$res="兴奋";
+		else
+			$res="放松";
+		return $res;
+	}
+
+	public function getLog(){
+		$vid=input("param.vid");
+		$res=Db::table('log')->where('vid',$vid)->field('bpm,speed')
+		->order('uploaddate desc')->limit(50)->select();
+		echo json_encode($res);
+	}
+	
+	public function insertData(){
+		$random_lat=self::randomFloat(20,50);
+		$random_lon=self::randomFloat(20,50);
+		$random_bpm=rand(20,80);
+		$random_attention=rand(20,90);
+		$random_medition=rand(20,90);
+		$random_speed=rand(10,30);
+		$random_battery=rand(10,100);
+		$data=[
+			"vid"=>"asdsdcz1314123ac",
+			"lat"=>$random_lat,
+			"lon"=>$random_lon,
+			"bpm"=>$random_bpm,
+			"Attention"=>$random_attention,
+			"Meditation"=>$random_medition,
+			"speed"=>$random_speed,
+			"battery"=>$random_battery,
+			"uploaddate"=>date("Y-m-d H:i:s")
+		];
+		Db::table("log")->insert($data);
+		$res['result']=true;
+		echo json_encode($res);
+	}
+
+	function randomFloat($min = 0, $max = 1) {
+		return $min + mt_rand() / mt_getrandmax() * ($max - $min);
+	}
 }
+
+
+
+
