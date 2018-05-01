@@ -11,20 +11,22 @@ class Home extends Controller
 		return $this->fetch();
 	}
 
-	public function isOnline()
-	{
+	public function getStatus(){
 		$vid=input("param.vid");
-		$current=Db::table('log')->where('vid',$vid)
-		->whereTime('uploaddate','-1 minutes')->select();
-		if(empty($current)){
-			$result['online']=false;
-		}
-		else{
-			$result['online']=true;
+		$result['online']=self::isOnline($vid);
+		if($result['online'])
 			$result['meditation']=self::getMeditation($vid);
-		}
 		$result['battery']=self::getBattery($vid);
 		echo json_encode($result);
+	}
+
+	public function isOnline($vid)
+	{
+		$current=Db::table('log')->where('vid',$vid)
+		->whereTime('uploaddate','-1 minutes')->select();
+		if(empty($current))
+			return false;
+		return true;
 	}
 
 	public function getBattery($vid){

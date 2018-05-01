@@ -94,9 +94,9 @@
 <!-- jQuery -->
 {include file="public:footer"/}
 <script type="text/javascript">
-    function UpdateOnline(vid){
+    function UpdateStatus(vid){
         $.getJSON(
-            "{:url('isOnline')}",{"vid":"asdsdcz1314123ac"},function(json){
+            "{:url('getStatus')}",{"vid":"asdsdcz1314123ac"},function(json){
                 // alert(json.online);
                 if(json.online==true){
                     $("#line_img").attr("src","__STATIC__/assets/img/shortcuts/online.png");
@@ -112,7 +112,7 @@
                 // alert(json.battery);
                 $("#battery_msg").html("电量:"+json.battery+"%");
             }
-            );
+        );
     }
 
     var ctx = document.getElementById("bpmChart");
@@ -155,7 +155,7 @@
             datasets: [{
                 label: '车速',
                 data: speedValue,
-                backgroundColor:'rgba(255, 99, 132, 0.2)',
+                backgroundColor:'rgba(135, 206, 255, 0.2)',
                 borderWidth: 1
             }]
         },
@@ -204,7 +204,7 @@
 
     $(document).ready(function(){
         setInterval("UpdateChart()",1000);
-        setInterval("UpdateOnline()",1000);
+        setInterval("UpdateStatus()",1000);
         // setInterval("InsertData()",1000);
     });
 </script>

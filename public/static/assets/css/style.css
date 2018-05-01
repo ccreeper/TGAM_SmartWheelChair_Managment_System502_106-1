@@ -1120,7 +1120,6 @@ hr {
     animation-fill-mode: both;
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
-    display: none;
 }
 
 .dropdown-menu, .elfinder-button-menu, .elfinder-contextmenu {
