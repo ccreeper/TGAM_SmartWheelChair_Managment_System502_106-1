@@ -34,58 +34,36 @@
         <!-- Content -->
         <section id="content" class="container">
 
-            <h4 class="page-title">设备管理</h4>
+            <h4 class="page-title">报修记录</h4>
             
             <!-- Table Striped -->
             <div class="block-area" id="tableStriped">
-
-                <div class="tile" style="margin-bottom: 2px">
-                    <h2 class="tile-title">关联列表</h2>
-                    <div class="tile-config dropdown">
-                        <a data-toggle="dropdown" href="" class="tooltips tile-menu" title="Options"></a>
-                        <ul class="dropdown-menu pull-right text-right">
-                            <li><a data-toggle="modal" href="#modalDefault">Add Device</a></li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <table class="tile table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>设备号</th>
                                 <th>设备名称</th>
-                                <th>出厂日期</th>
-                                <th>激活日期</th>
-                                <th>绑定时间</th>
-                                <th></th>
+                                <th>原因描述</th>
+                                <th>报修时间</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {volist name="devices" id="dev"}
-                            <tr class="tr{$dev.id} <?php if($dev['track']==1) echo ' selected'; ?>">
-                                <td>{$dev.vid}</td>
-                                <td>{$dev.vname}</td>
-                                <td>{$dev.pdate}</td>
-                                <td>{$dev.rdate}</td>
-                                <td>{$dev.linkdate}</td>
-                                <td>
-                                    <div class="btn-group m-b-10">
-                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
-                                            Action
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{:url('device/delete',['vid'=>$dev.vid])}" onClick="return confirm('确认删除？')">Delete</a></li>
-                                            <li><a href="#" onclick="setTrack('{$dev.vid}','{$dev.id}')">Track</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                            {volist name="repair" id="vo"}
+                            <tr>
+                                <td>{$vo.vid}</td>
+                                <td>{$vo.vname}</td>
+                                <td>{$vo.content}</td>
+                                <td>{$vo.uploadtime}</td>
                             </tr>
                             {/volist}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <hr class="whiter" />
+
         </section>
         <br/><br/>
     </section>
@@ -116,20 +94,6 @@
     </div>
 </div>
 {include file="public:footer"/}
-<script type="text/javascript">
-    function setTrack(vid,id){
-        $.ajax({
-            type:"get",
-            url:"{:url('track')}",
-            data:{vid:vid},
-            dataType:"json",
-            success:function(result){
-                $("tr").removeClass("selected");
-                $(".tr"+id).addClass("selected");
-            }
-        });
-    }
-</script>
 </body>
 </html>
 

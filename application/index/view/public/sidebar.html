@@ -41,18 +41,23 @@
                             <span class="menu-item">设备管理</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="dropdown">
                         <a class="sa-side-chart" href="charts.html">
-                            <span class="menu-item">实时数据</span>
+                            <span class="menu-item">数据</span>
                         </a>
+                        <ul class="list-unstyled menu-item">
+                            <li><a href="#">历史轨迹</a></li>
+                            <li><a href="#">历史数据</a></li>
+                            <li><a href="#">实时地图</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a class="sa-side-table" href="tables.html">
                             <span class="menu-item">管理快照</span>
                         </a>
                     </li>
-                    <li class="dropdown">
-                        <a class="sa-side-form" href="">
+                    <li class="<?php if(request()->controller()=='Repair') echo 'active'; ?>">
+                        <a class="sa-side-form" href="{:url('repair/index')}">
                             <span class="menu-item">报修</span>
                         </a>
                     </li>
