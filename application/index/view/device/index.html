@@ -34,16 +34,7 @@
         <!-- Content -->
         <section id="content" class="container">
 
-
-
-            <!-- Breadcrumb -->
-            <ol class="breadcrumb hidden-xs">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Library</a></li>
-                <li class="active">Data</li>
-            </ol>
-
-            <h4 class="page-title">TABLES</h4>
+            <h4 class="page-title">设备管理</h4>
             
             <!-- Table Striped -->
             <div class="block-area" id="tableStriped">
@@ -53,12 +44,11 @@
                     <div class="tile-config dropdown">
                         <a data-toggle="dropdown" href="" class="tooltips tile-menu" title="Options"></a>
                         <ul class="dropdown-menu pull-right text-right">
-                            <li><a href="">Refresh</a></li>
-                            <li><a href="">Settings</a></li>
+                            <li><a data-toggle="modal" href="#modalDefault">Add Device</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="table-responsive overflow">
+                <div class="table-responsive">
                     <table class="tile table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -67,65 +57,31 @@
                                 <th>出厂日期</th>
                                 <th>激活日期</th>
                                 <th>绑定时间</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {volist name="devices" id="dev"}
                             <tr>
-                                <td>1</td>
-                                <td>Jhon </td>
-                                <td>Makinton </td>
-                                <td>@makinton</td>
-                                <td>@makinton</td>
+                                <td>{$dev.vid}</td>
+                                <td>{$dev.vname}</td>
+                                <td>{$dev.pdate}</td>
+                                <td>{$dev.rdate}</td>
+                                <td>{$dev.linkdate}</td>
+                                <td>
+                                    <div class="btn-group m-b-10">
+                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            Action
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Edit</a></li>
+                                            <li><a href="{:url('device/delete',['vid'=>$dev.vid])}" onClick="return confirm('确认删除？')">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Malinda</td>
-                                <td>Hollaway</td>
-                                <td>@hollway</td>
-                                <td>@makinton</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Wayn</td>
-                                <td>Parnel</td>
-                                <td>@wayne123</td>
-                                <td>@makinton</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>TB - Monthly</td>
-                                <td>05/04/2012</td>
-                                <td>Call in to confirm</td>
-                                <td>@makinton</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>TB - Monthly</td>
-                                <td>06/04/2012</td>
-                                <td>@makinton</td>
-                                <td>Pending</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>TB - Monthly</td>
-                                <td>07/04/2012</td>
-                                <td>Call in to confirm</td>
-                                <td>@makinton</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>TB - Monthly</td>
-                                <td>08/04/2012</td>
-                                <td>Call in to confirm</td>
-                                <td>@makinton</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>TB - Monthly</td>
-                                <td>09/04/2012</td>
-                                <td>Call in to confirm</td>
-                                <td>@makinton</td>
-                            </tr>
+                            {/volist}
                         </tbody>
                     </table>
                 </div>
@@ -133,6 +89,24 @@
         </section>
         <br/><br/>
     </section>
+    <!-- Modal Default -->  
+    <div class="modal fade" id="modalDefault" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm">提交</button>
+                    <button type="button" class="btn btn-sm" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {include file="public:footer"/}
 </body>
 </html>
