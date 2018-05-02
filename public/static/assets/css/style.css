@@ -146,7 +146,7 @@ img {
     -webkit-transition: width 300ms;
     -moz-transition: width 300ms;
     transition: width 300ms;
-    display: none;
+    /*display: none;*/
 }
 
 #settings i {

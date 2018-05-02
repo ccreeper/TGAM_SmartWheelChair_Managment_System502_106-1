@@ -11,4 +11,9 @@ class Repair extends Controller
 		$this->assign('repair',$list);
 		return $this->fetch();
 	}
+
+	public function add(){
+		// $pic = request()->file('pic');
+		// var_dump($pic);
+	}
 }
