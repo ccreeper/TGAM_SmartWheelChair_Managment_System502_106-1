@@ -23,7 +23,7 @@ class Index extends Controller
 	public function isOnline($vid)
 	{
 		$current=Db::table('log')->where('vid',$vid)
-		->whereTime('uploaddate','-1 minutes')->select();
+		->whereTime('uploaddate','-1 minutes')->order('uploaddate desc')->limit(1)->select();
 		if(empty($current))
 			return false;
 		return true;
@@ -37,7 +37,7 @@ class Index extends Controller
 
 	public function getMeditation($vid){
 		$current=Db::table('log')->where('vid',$vid)
-		->whereTime('uploaddate','-1 minutes')->select();
+		->whereTime('uploaddate','-1 minutes')->order('uploaddate desc')->limit(1)->select();
 		$meditation=$current[0]['Meditation'];
 		if($meditation<=40)
 			$res="疲劳";

@@ -192,7 +192,8 @@
                 bpmChart.update();
                 speedChart.update();
             },
-            error: function (xml,status,thrown) {  
+            error: function (xml,status,thrown) {
+                clearInterval(chart_timer);
                 bpmChart.hideLoading();  
                 speedChart.hideLoading();  
             }  
@@ -207,11 +208,9 @@
         );
     }
 
-    $(document).ready(function(){
-        setInterval("UpdateChart()",1000);
-        setInterval("UpdateStatus()",1000);
-        // setInterval("InsertData()",1000);
-    });
+    var chart_timer=setInterval("UpdateChart()",1000);
+    setInterval("UpdateStatus()",1000);
+    setInterval("InsertData()",1000);
 </script>
 </body>
 </html>

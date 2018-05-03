@@ -41,14 +41,14 @@
                             <span class="menu-item">设备管理</span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown <?php if(request()->controller()=='Data') echo 'active'; ?>">
                         <a class="sa-side-chart" href="charts.html">
                             <span class="menu-item">数据</span>
                         </a>
                         <ul class="list-unstyled menu-item">
-                            <li><a href="#">历史轨迹</a></li>
+                            <li><a href="{:url('data/historypath')}">历史轨迹</a></li>
                             <li><a href="#">历史数据</a></li>
-                            <li><a href="#">实时地图</a></li>
+                            <li><a href="{:url('data/realposition')}">实时地图</a></li>
                         </ul>
                     </li>
                     <li>
