@@ -23,4 +23,17 @@ class Data extends Controller
 		$data['lat']=$res[0]['lat'];
 		echo json_encode($data);
 	}
+
+	public function searchHistoryPath(){
+		$vid=input("param.vid");
+		$begindate=input("param.begindate");
+		$begintime=input("param.begintime");
+		$enddate=input("param.enddate");
+		$endtime=input("param.endtime");	
+
+		$start=$begindate.' '.$begintime;
+		$end=$enddate.' '.$endtime;
+		$res=Db::table('log')->where('vid',$vid)->whereTime('uploaddate','between',[$start,$end])->field('lon,lat')->select();
+		echo json_encode($res);
+	}
 }
