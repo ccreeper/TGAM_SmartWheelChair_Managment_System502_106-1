@@ -193,7 +193,6 @@
             },
             error: function (xml,status,thrown) {
                 clearInterval(chart_timer);
-                alert("获取数据失败,请检查网络是否正常");
                 bpmChart.hideLoading();  
                 speedChart.hideLoading();  
             }  
