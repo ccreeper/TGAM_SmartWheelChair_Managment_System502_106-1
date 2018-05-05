@@ -85,6 +85,7 @@
                       }); 
 
             function searchPath(){
+                map.clearOverlays();
                 if(!$("#begindate").val() || !$("#begintime").val() || !$("#enddate").val() || !$("#endtime").val()){
                     alert("请输入完整的时间段");
                     return ;
@@ -98,11 +99,6 @@
                     data:{vid:'asdsdcz1314123ac',begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
                     dataType:"json",
                     success:function(result){
-                        if(result.length==0){
-                            alert("数据获取失败,请确认查询时间段是否符合规范");
-                            $("#mapcontainer").hide();
-                            return;
-                        }
                         var start_point=new BMap.Point(result[0].lon,result[0].lat);
                         var end_point=new BMap.Point(result[result.length-1].lon,result[result.length-1].lat);
                         var marker = new BMap.Marker(start_point, {icon:start_icon});
@@ -117,7 +113,11 @@
                         map.addOverlay(marker);               
                         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
                         map.panTo(start_point);
-                    }
+                    },
+                    error: function (xml,status,thrown) {
+                        alert("数据获取失败,请确认查询时间段是否符合规范");
+                        $("#mapcontainer").hide();
+                    }  
                 });
             }
         </script>

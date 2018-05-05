@@ -70,7 +70,6 @@
 
                         <div class="clearfix"></div>
                     </div>
-
                     
                     <div class="clearfix"></div>
                 </div>
@@ -112,13 +111,13 @@
                 // alert(json.battery);
                 $("#battery_msg").html("电量:"+json.battery+"%");
             }
-        );
+            );
     }
 
-    var ctx = document.getElementById("bpmChart");
+    var bpmctx = document.getElementById("bpmChart");
     var bpmLabel= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
     var bpmValue=[];
-    var bpmChart = new Chart(ctx, {
+    var bpmChart = new Chart(bpmctx, {
         type: 'line',
         data: {
             labels: bpmLabel,
@@ -145,10 +144,10 @@
         }
     });
 
-    var ctx = document.getElementById("speedChart");
+    var speedctx = document.getElementById("speedChart");
     var speedLabel= [,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,];
     var speedValue=[];
-    var speedChart = new Chart(ctx, {
+    var speedChart = new Chart(speedctx, {
         type: 'line',
         data: {
             labels: speedLabel,
@@ -194,6 +193,7 @@
             },
             error: function (xml,status,thrown) {
                 clearInterval(chart_timer);
+                alert("获取数据失败,请检查网络是否正常");
                 bpmChart.hideLoading();  
                 speedChart.hideLoading();  
             }  
@@ -205,7 +205,7 @@
             "{:url('insertData')}",function(json){
                 
             }
-        );
+            );
     }
 
     var chart_timer=setInterval("UpdateChart()",1000);
