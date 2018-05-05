@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/animate.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet"> 
+</head>
+<body id="skin-blur-violate">
+
+    {include file="public:header"/}   
+
+    <div class="clearfix"></div>
+
+    <section id="main" class="p-relative" role="main">
+
+        {include file="public:sidebar"/}
+
+        <!-- Content -->
+        <section id="content" class="container">
+
+            <h4 class="page-title">查询历史数据</h4>
+            <div class="block-area" id="button-tags">
+                <div class="row">
+                    <div class="col-md-3 m-b-15">
+                        <label>开始时间</label>
+                        <input type="date" class="form-control" id="begindate">
+                    </div>
+                    <div class="col-md-2 m-b-15">
+                        <label style="opacity: 0">.</label>
+                        <input type="time" class="form-control" id="begintime">
+                    </div>
+
+                    <div class="col-md-3 m-b-15">
+                        <label>结束时间</label>
+                        <input type="date" class="form-control" id="enddate">
+                    </div>
+                    <div class="col-md-2 m-b-15">
+                        <label style="opacity: 0">.</label>
+                        <input type="time" class="form-control" id="endtime">
+                    </div>
+                </div>
+
+                <div class="block-area" id="check" style="padding: 0">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="checkBpm">脉搏状况
+                    </label>
+
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="checkMeditation">精神状况
+                    </label>
+
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="checkSpeed">车速状况
+                    </label>
+                </div>
+                <button class="btn" style="margin-bottom: 10px;margin-top: 10px" onclick="search()">查询</button>
+            </div>
+            <hr class="whiter" />
+
+            <div class="block-area">
+                <div class="row">
+                    <div class="col-md-8" id="bigBox" style="display: none;">
+                        <!-- Main Chart -->
+                        <div class="tile" id="bpmBox" style="display: none;">
+                            <h2 class="tile-title">脉搏状况</h2>
+                            <div>
+                                <canvas id="bpmChart" style="height: 200px;width: 700px"></canvas>
+                            </div>
+                        </div>
+                        <div class="tile" id="speedBox" style="display: none;">
+                            <h2 class="tile-title">车速</h2>
+                            <div>
+                                <canvas id="speedChart" style="height: 200px;width: 700px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="tile" id="meditationBox" style="display: none;">
+                            <h2 class="tile-title">精神状态</h2>
+                            <div>
+                                <canvas id="meditationChart" style="height:600px;width:700px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br/><br/>
+    </section>
+    {include file="public:footer"/}
+    <script type="text/javascript">
+        var bpmctx = document.getElementById("bpmChart");
+        var bpmLabel= [];
+        var bpmValue=[];
+        var bpmChart = new Chart(bpmctx, {
+            type: 'line',
+            data: {
+                labels: bpmLabel,
+                datasets: [{
+                    label: '脉搏',
+                    data: bpmValue,
+                    backgroundColor:'rgba(255, 99, 132, 0.3)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                },
+                elements: {
+                    line: {
+                        tension: 0, 
+                    }
+                }
+            }
+        });
+
+        var speedctx = document.getElementById("speedChart");
+        var speedLabel=[];
+        var speedValue=[];
+        var speedChart = new Chart(speedctx, {
+            type: 'line',
+            data: {
+                labels: speedLabel,
+                datasets: [{
+                    label: '车速',
+                    data: speedValue,
+                    backgroundColor:'rgba(135, 206, 255, 0.3)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                },
+                elements: {
+                    line: {
+                        tension: 0, 
+                    }
+                }
+            }
+        });
+
+        var meditationctx = document.getElementById("meditationChart");
+        var meditationLabel= ['疲劳','兴奋','放松'];
+        var meditationValue=[50,50,50];
+        var meditationChart = new Chart(meditationctx, {
+            type: 'doughnut',
+            data: {
+                labels: meditationLabel,
+                datasets: [{
+                    label: '精神状况',
+                    data: meditationValue,
+                    backgroundColor: [
+                    'rgba(238, 0, 0, 0.8)',
+                    'rgba(255, 140, 0, 0.8)',
+                    'rgba(255, 255, 0, 0.8)'
+                    ],
+                    borderWidth:1
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+
+        function search(){
+            if(!$("#begindate").val() || !$("#begintime").val() || !$("#enddate").val() || !$("#endtime").val()){
+                alert("请输入完整的时间段");
+                return ;
+            }
+
+            $.ajax({
+                type:"get",
+                url:"{:url('searchMeditation')}",
+                data:{vid:'asdsdcz1314123ac',begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                dataType:"json",
+                success:function(result){
+                    checkView();
+                    meditationValue[0]=result.tired;
+                    meditationValue[1]=result.excitation;
+                    meditationValue[2]=result.relax;
+                    meditationChart.update();
+                },
+                error: function (xml,status,thrown) {
+                    alert("数据获取失败,请确认查询时间段是否符合规范");
+                }  
+            });
+
+            $.ajax({
+                type:"get",
+                url:"{:url('searchBpmAndSpeed')}",
+                data:{vid:'asdsdcz1314123ac',begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                dataType:"json",
+                success:function(result){
+                    checkView();
+                    $.each(result,function(i,item){
+                        speedLabel[i]='';
+                        bpmLabel[i]='';
+                        speedValue[i]=item.speed;
+                        bpmValue[i]=item.bpm;
+                    }); 
+                    bpmChart.update();
+                    speedChart.update();
+                }
+            });
+
+        }
+
+        function checkView(){
+            $('#speedBox').hide();
+            $('#bpmBox').hide();
+            $('#meditationBox').hide();
+            $('#bigBox').hide();
+
+            if($('#checkSpeed').is(":checked")){
+                $('#speedBox').show();
+                $('#bigBox').show();
+            }
+
+            if($('#checkBpm').is(":checked")){
+                $('#bpmBox').show();
+                $('#bigBox').show();
+            }
+
+            if($('#checkMeditation').is(":checked"))
+                $('#meditationBox').show();
+        }
+    </script>
+</body>
+</html>
+

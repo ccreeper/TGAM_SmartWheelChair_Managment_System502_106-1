@@ -122,6 +122,9 @@ img {
     max-width: 100%;
 }
 
+.selected{
+    background: dodgerblue;
+}
 /* --------------------------------------------------------
     Template Settings
 -----------------------------------------------------------*/
@@ -143,7 +146,7 @@ img {
     -webkit-transition: width 300ms;
     -moz-transition: width 300ms;
     transition: width 300ms;
-    display: none;
+    /*display: none;*/
 }
 
 #settings i {
@@ -2279,5 +2282,4 @@ a.list-group-item.active > .badge,
         font-size: 11px;
     }
 }
-
 

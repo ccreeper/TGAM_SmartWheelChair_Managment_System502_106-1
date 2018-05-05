@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/animate.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet"> 
+</head>
+<body id="skin-blur-violate">
+
+    {include file="public:header"/}   
+
+    <div class="clearfix"></div>
+
+    <section id="main" class="p-relative" role="main">
+
+        {include file="public:sidebar"/}
+
+        <!-- Content -->
+        <section id="content" class="container">
+
+            <h4 class="page-title">报修记录</h4>
+            <div class="block-area" id="button-tags">
+                <button class="btn" data-toggle="modal" href="#modalDefault">报修</button>
+            </div>
+            <!-- Table Striped -->
+            <div class="block-area" id="tableStriped">
+                <div class="table-responsive">
+                    <table class="tile table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>报修单号</th>
+                                <th>设备号</th>
+                                <th>设备名称</th>
+                                <th>原因描述</th>
+                                <th>报修时间</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="repair" id="vo"}
+                            <tr>
+                                <td>{$vo.tid}</td>
+                                <td>{$vo.vid}</td>
+                                <td>{$vo.vname}</td>
+                                <td>{$vo.content}</td>
+                                <td>{$vo.uploadtime}</td>
+                                <td>
+                                    <div class="btn-group m-b-10">
+                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="modal" href="#modalPic" onclick="sendtid({$vo.tid})">
+                                            上传照片
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+        <br/><br/>
+    </section>
+    <!-- Modal Default -->  
+    <div class="modal fade" id="modalDefault" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新建报修单</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="{:url('add')}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="inputUser" class="col-md-2 control-label">设备号:  </label>
+                            <div  class="col-md-6">
+                              <input type="text" class="form-control" id="inputUser" placeholder="设备号" name="vid"> 
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="inputContent" class="col-md-2 control-label">原因:  </label>
+                        <div  class="col-md-6">
+                            <textarea id="inputContent" class="form-control"  rows="5" name="content"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm">提交</button>
+                        <button type="reset" class="btn btn-sm">重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Modal Default -->  
+    <div class="modal fade" id="modalPic" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">上传设备照片</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="{:url('addPic')}" method="post" enctype="multipart/form-data">
+                    
+                    <input type="hidden" name="tid" id="modal-tid">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">上传照片:  </label>
+                        <div class="col-md-6">
+                            <div class="col-sm-6">
+                                <input type="file" name="pic[]" multiple>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm">提交</button>
+                        <button type="reset" class="btn btn-sm">重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+<script type="text/javascript">
+    function sendtid(tid){
+        $("#modal-tid").val(tid);
+    }
+</script>
+</body>
+</html>
+

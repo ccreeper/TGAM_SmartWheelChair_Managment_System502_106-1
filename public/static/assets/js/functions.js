@@ -16,46 +16,46 @@ $(document).ready(function(){
 				'<div class="modal-body">' +
 				    '<div class="row template-skins">' +
 					'<a data-skin="skin-blur-violate" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-violate.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-violate.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-lights" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-lights.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-lights.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-city" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-city.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-city.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-greenish" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-greenish.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-greenish.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-night" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-night.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-night.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-blue" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-blue.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-blue.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-sunny" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunny.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-sunny.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-cloth" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-cloth.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-cloth.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-tectile" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-tectile.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-tectile.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-chrome" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-chrome.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-chrome.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-ocean" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-ocean.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-ocean.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-sunset" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunset.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-sunset.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-yellow" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-yellow.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-yellow.jpg" alt="">' +
 					'</a>' +
 					'<a  data-skin="skin-blur-kiwi"class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-kiwi.jpg" alt="">' +
+					    '<img src="/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/skin-kiwi.jpg" alt="">' +
 					'</a>' +
 				    '</div>' +
 				'</div>' +
