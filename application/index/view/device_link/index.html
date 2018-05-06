@@ -75,8 +75,12 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{:url('device/delete',['vid'=>$dev.vid])}" onClick="return confirm('确认删除？')">Delete</a></li>
-                                            <li><a href="#" onclick="setTrack('{$dev.vid}','{$dev.id}')">Track</a></li>
+                                            <li>
+                                                <a href="{:url('device_link/delete',['vid'=>$dev.vid])}" onClick="return confirm('确认删除？')">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" onclick="setTrack('{$dev.vid}','{$dev.id}')">Track</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
