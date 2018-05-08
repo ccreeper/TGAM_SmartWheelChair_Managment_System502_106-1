@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="dropdown <?php if(request()->controller()=='Data') echo 'active'; ?>">
-                        <a class="sa-side-chart" href="charts.html">
+                        <a class="sa-side-chart" href="#">
                             <span class="menu-item">数据</span>
                         </a>
                         <ul class="list-unstyled menu-item">
@@ -51,13 +51,13 @@
                             <li><a href="{:url('data/realposition')}">实时地图</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a class="sa-side-table" href="tables.html">
+                    <li class="<?php if(request()->controller()=='Shortcut') echo 'active'; ?>">
+                        <a class="sa-side-table" href="{:url('shortcut/index')}">
                             <span class="menu-item">管理快照</span>
                         </a>
                     </li>
                     <li class="<?php if(request()->controller()=='Repair') echo 'active'; ?>">
-                        <a class="sa-side-form" href="{:url('repair_manager/index')}">
+                        <a class="sa-side-form" href="{:url('repair/index')}">
                             <span class="menu-item">报修</span>
                         </a>
                     </li>

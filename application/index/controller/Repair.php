@@ -1,14 +1,14 @@
 <?php
 namespace app\index\controller;
-use app\index\model\Repair;
+use app\index\model\RepairModel;
 use think\Controller;
 use think\Db;
 use think\Session;
 
-class RepairManager extends Controller
+class Repair extends Controller
 {
 	public function index(){
-		$rep=new Repair;
+		$rep=new RepairModel;
 		//uid替换
 		$list=$rep->getList(1);		
 		$this->assign('repair',$list);
@@ -18,7 +18,7 @@ class RepairManager extends Controller
 	public function add(){
 		$vid=input("param.vid");
 		$content=input("param.content");
-		$rep=new Repair;
+		$rep=new RepairModel;
 		//uid替换
 		$info=$rep->add(1,$vid,$content);
 		if($info==1)
@@ -32,7 +32,7 @@ class RepairManager extends Controller
 	public function addPic(){
 		$pic = request()->file('pic');
 		$tid=input("param.tid");
-		$rep=new Repair;
+		$rep=new RepairModel;
 		if($pic)
 		{
 			foreach ($pic as $key => $value) {

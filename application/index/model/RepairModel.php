@@ -3,7 +3,7 @@ namespace app\index\model;
 use think\Db;
 use think\Model;
 
-class Repair extends Model
+class RepairModel extends Model
 {
 	public function getList($uid){
 		$list=Db::table("repair")
