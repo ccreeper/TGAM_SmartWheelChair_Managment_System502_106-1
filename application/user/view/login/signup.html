@@ -2,18 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Registration Form Template</title>
+    <title>TGAM轮椅后台管理登陆</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/form-elements.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="__STATIC__/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__STATIC__/user/signup/assets/css/form-elements.css">
+    <link rel="stylesheet" href="__STATIC__/user/signup/assets/css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,11 +23,10 @@
 
     <!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="__STATIC__/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="__STATIC__/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="__STATIC__/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="__STATIC__/assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
 <body>
@@ -49,19 +47,12 @@
         <div class="collapse navbar-collapse" id="top-navbar-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-							<span class="li-text">
-								Put some text or
-							</span>
-                    <a href="#"><strong>links</strong></a>
                     <span class="li-text">
-								here, or some icons:
-							</span>
+						如果您有任何问题，请联系我们->
+                    </span>
                     <span class="li-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-envelope"></i></a>
-								<a href="#"><i class="fa fa-skype"></i></a>
-							</span>
+                        <a href="Mailto:test@test.com"><i class="fa fa-envelope"></i></a>
+                    </span>
                 </li>
             </ul>
         </div>
@@ -75,63 +66,171 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Bootstrap</strong> Registration Form</h1>
+                    <h1><strong>欢迎</strong> 注册账号方便您管理智能轮椅</h1>
                     <div class="description">
                         <p>
-                            This is a free responsive registration form made with Bootstrap.
-                            Download it on <a href="#"><strong>AZMIND</strong></a>, customize and use it as you like!
+                            注册账号是免费的<br>
+                            您还可以通过客户端注册 <a href="#" style=""><strong><u>点这里</u></strong></a>下载安卓手机客户端
                         </p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 book">
-                    <img src="assets/img/ebook.png" alt="">
+                    <img src="__STATIC__/assets/img/ebook.png" alt="">
                 </div>
                 <div class="col-sm-5 form-box">
                     <div class="form-top">
                         <div class="form-top-left">
-                            <h3>Get our eBook</h3>
-                            <p>Fill in the form below to get instant access:</p>
+                            <h3>注册账号</h3>
+                            <p>请填写以下信息以获取您的账号</p>
                         </div>
                         <div class="form-top-right">
                             <i class="fa fa-pencil"></i>
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" id="signup_form">
                             <div class="form-group">
-                                <label class="sr-only" for="form-first-name">First name</label>
-                                <input type="text" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                <label id="email-L" class="sr-only" for="form-email">电子邮箱</label>
+                                <input type="text" name="email" placeholder="电子邮箱(确保收信正常)" class="form-email form-control" id="form-email">
                             </div>
                             <div class="form-group">
-                                <label class="sr-only" for="form-last-name">Last name</label>
-                                <input type="text" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                <label class="sr-only">您的昵称</label>
+                                <input type="text" name="username" placeholder="昵称" class="form-first-name form-control" id="username">
                             </div>
                             <div class="form-group">
-                                <label class="sr-only" for="form-email">Email</label>
-                                <input type="text" name="form-email" placeholder="Email..." class="form-email form-control" id="form-email">
+                                <label class="sr-only">密码</label>
+                                <input type="password" name="password" placeholder="登陆密码" class="form-last-name form-control" id="passwd">
                             </div>
-                            <button type="submit" class="btn">Give it to me!</button>
+                            <div class="form-group">
+                                <label class="sr-only">密码</label>
+                                <input type="password" name="repassword" placeholder="确认密码" class="form-last-name form-control" id="repasswd">
+                            </div>
+                            <div class="form-group">
+                                <label style="color: white">验证码(<a href="#" onclick="getElementById('captchaImg').src=getElementById('captchaImg').src+'?'">点击刷新</a>)</label>
+                                <input type="text" id="captcha" name="captcha" class="form-control" placeholder="验证码">
+                            </div>
+                            <div class="form-group">
+                                <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
+                            </div>
+                            <button type="button" onclick="commit();" class="btn">注册</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">成功！</h4>
+                </div>
+                <div class="modal-body">
+                    <p>恭喜！注册成功，一封激活邮件已经发送到您的邮箱!</p><br>
+                    <a id="mailaddr" href="">去激活-></a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="alert('已经重新发送邮件！')" class="btn btn-primary">没收到？</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <!-- Javascript -->
-<script src="assets/js/jquery-1.11.1.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.backstretch.min.js"></script>
-<script src="assets/js/retina-1.1.0.min.js"></script>
-<script src="assets/js/scripts.js"></script>
+<script src="__STATIC__/user/signup/assets/js/jquery-1.11.1.min.js"></script>
+<script src="__STATIC__/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="__STATIC__/user/signup/assets/js/jquery.backstretch.min.js"></script>
+<script src="__STATIC__/user/signup/assets/js/retina-1.1.0.min.js"></script>
+<script src="__STATIC__/assets/js/md5.js"></script>
+<script src="__STATIC__/user/signup/assets/js/scripts.js"></script>
+<script>
+    var eisOK=true;
+    $("#form-email").change(function check_distinct()
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('Signup/check_distinct')}",
+            data:"email="+$("#form-email").val(),
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    $("#form-email").css("border","0px");
+                    eisOK=true;
+                }
+                else
+                {
+                    $("#form-email").css("border","2px solid red");
+                    $("#form-email").val("此邮箱已经被注册！");
+                    eisOK=false;
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        })
+    });
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("signup_form"));
+        if(!eisOK)
+        {
+            return false;
+        }
+        if(formdata.get("password")!==formdata.get("repassword"))
+        {
+            $("#passwd").css("border","2px solid red");
+            $("#repasswd").css("border","2px solid red");
+            return false;
+        }
+        formdata.set("password",hex_md5(formdata.get("password")));
+        $.ajax({
+            type:"post",
+            url:"{:url('Signup/signup')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
+                if(status === 1)
+                {
+                    var mailaddr=formdata.get("email").split("@");
+                    $("#mailaddr").attr("href","https://mail."+mailaddr[1]);
+                    $("#success").modal('show');
+                }
+                else if(status === 2)
+                {
+                    $("#captcha").css("border","2px solid red");
+                }
+                else
+                {
+                    alert("系统错误！");
+                }
 
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+</script>
 <!--[if lt IE 10]>
-<script src="assets/js/placeholder.js"></script>
+<script src="__STATIC__/user/signup/assets/js/placeholder.js"></script>
 <![endif]-->
 
 </body>

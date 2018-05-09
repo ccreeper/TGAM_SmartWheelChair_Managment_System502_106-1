@@ -13,7 +13,7 @@ class Index extends Controller
         }
         else
         {
-            $this->fetch();
+            return $this->fetch();
         }
     }
 }

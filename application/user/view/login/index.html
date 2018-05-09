@@ -51,7 +51,7 @@
                 <li>
                     <span class="li-text">没有账号？注册一个吧！-></span>
                     <span class="li-social">
-                        <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a href="{:url('signup')}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     </span>
                 </li>
             </ul>
@@ -61,12 +61,13 @@
 
 <!-- Top content -->
 <div class="top-content">
-
     <div class="inner-bg">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 book" style="color: white;font-size: 32px;">
-                    <p>登录系统以管理您的智能轮椅</p>
+                    <p>
+                        登录系统以管理您的智能轮椅
+                    </p>
                 </div>
                 <div class="col-sm-5 col-sm-offset-7 form-box">
                     <div class="form-top">
@@ -78,24 +79,23 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" id="loginform" class="registration-form">
                             <div class="form-group">
                                 <label style="color: white">用户名</label>
-                                <input type="email" class="form-control" placeholder="您注册时填写的邮箱">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="您注册时填写的邮箱">
                             </div>
                             <div class="form-group">
                                 <label style="color: white">密码</label>
-                                <input type="password" class="form-control" placeholder="密码">
+                                <input type="password" name="password" id="passwd" class="form-control" placeholder="密码">
                             </div>
                             <div class="form-group">
                                 <label style="color: white">验证码(<a href="#" onclick="getElementById('captchaImg').src=getElementById('captchaImg').src+'?'">点击刷新</a>)</label>
-                                <input type="text" class="form-control" placeholder="验证码">
+                                <input type="text" id="captcha" name="captcha" class="form-control" placeholder="验证码">
                             </div>
                             <div class="form-group">
                                 <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
                             </div>
-                            <!--<button type="submit" style="width: 100%;background: #0e90d2;color: white;border: 0px;border-radius: 3px">登陆</button>-->
-                            <button type="submit" class="btn">登陆</button>
+                            <button type="button" onclick="commit();" class="btn">登陆</button>
                         </form>
                     </div>
                 </div>
@@ -111,11 +111,54 @@
 <script src="__STATIC__/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="__STATIC__/user/login/assets/js/jquery.backstretch.min.js"></script>
 <script src="__STATIC__/assets/js/LoginCGI/retina-1.1.0.min.js"></script>
+<script src="__STATIC__/assets/js/md5.js"></script>
 <script src="__STATIC__/user/login/assets/js/scripts.js"></script>
+<script>
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("loginform"));
+        formdata.set("password",hex_md5(formdata.get("password")));
+        $.ajax({
+            type:"post",
+            url:"{:url('logincheck')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
+                if(status === 1)
+                {
+                    window.location.href="{:url('Index/index')}";
+                }
+                else if(status === 2)
+                {
+                    $("#captcha").css("border","2px solid red");
+                }
+                else
+                {
+                    $("#email").css("border","2px solid red");
+                    $("#passwd").css("border","2px solid red");
+                }
 
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+</script>
 <!--[if lt IE 10]>
 <script src="__STATIC__/assets/js/LoginCGI/placeholder.js"></script>
 <![endif]-->
+<script>
+
+</script>
+
 
 </body>
 

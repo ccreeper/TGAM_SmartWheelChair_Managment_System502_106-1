@@ -7,7 +7,7 @@ class Index extends Controller
 {
     public function index()
     {
-        if(!Session::has('adminid'))
+        if(!Session::has('userid'))
         {
             $this->redirect('Login/index');
         }
