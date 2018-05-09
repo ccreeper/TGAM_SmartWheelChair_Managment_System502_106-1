@@ -13,27 +13,38 @@ class ShortcutModel extends Model
 	}
 
 	public function getLink($uid){
-		$link=Db::table("link")->where('uid',$uid)->select();
+		$link=Db::table("link")
+			->where('uid',$uid)
+			->select();
 		return $link;
 	}
 
 	public function destory($id){
-		$res=Db::name("shortcut")->where('id',$id)->delete();
+		$res=Db::name("shortcut")
+			->where('id',$id)
+			->delete();
 		return $res;
 	}
 
 	public function getPicById($id){
-		$res=Db::name("shortcut")->field("pic")->find($id);
+		$res=Db::name("shortcut")
+			->field("pic")
+			->find($id);
 		return $res;
 	}
 
 	public function getPicByVid($vid){
-		$res=Db::name("shortcut")->field("pic")->where('vid',$vid)->select();
+		$res=Db::name("shortcut")
+			->field("pic")
+			->where('vid',$vid)
+			->select();
 		return $res;
 	}
 
 	public function clear($vid){
-		$res=Db::name("shortcut")->where('vid',$vid)->delete();
+		$res=Db::name("shortcut")
+			->where('vid',$vid)
+			->delete();
 		return $res;
 	}
 }

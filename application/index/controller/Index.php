@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use app\index\model\Log;
 use app\index\model\CommonUtil;
+use app\index\model\Device;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -14,8 +15,11 @@ class Index extends Controller
 	}
 
 	public function getStatus(){
-		$vid=input("param.vid");
 		$log=new Log;
+		$dev=new Device;
+		//uid替换
+		$uid=1;
+		$vid=$dev->getTrack($uid);
 		$result['online']=$log->isOnline($vid);
 		if($result['online'])
 			$result['meditation']=$log->getMeditation($vid);
@@ -24,14 +28,20 @@ class Index extends Controller
 	}
 
 	public function getLog(){
-		$vid=input("param.vid");
+		$dev=new Device;
 		$log=new Log;
+		//uid替换
+		$uid=1;
+		$vid=$dev->getTrack($uid);
 		$res=$log->getLog($vid,50);
 		echo json_encode($res);
 	}
 	
 	public function insertData(){
 		$util=new CommonUtil;
+		$dev=new Device;
+		$uid=1;
+		$vid=$dev->getTrack($uid);
 		$random_lat=$util->randomFloat(20,50);
 		$random_lon=$util->randomFloat(20,50);
 		$random_bpm=rand(20,80);
@@ -40,7 +50,7 @@ class Index extends Controller
 		$random_speed=rand(10,30);
 		$random_battery=rand(10,100);
 		$data=[
-			"vid"=>"asdsdcz1314123ac",
+			"vid"=>$vid,
 			"lat"=>$random_lat,
 			"lon"=>$random_lon,
 			"bpm"=>$random_bpm,

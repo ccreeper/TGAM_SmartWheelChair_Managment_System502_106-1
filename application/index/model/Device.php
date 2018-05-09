@@ -34,8 +34,14 @@ class Device extends Model
 	}
 
 	public function setTrack($uid,$vid){
-		Db::name("link")->where('uid',1)->where('track',1)->update(['track'=>0]);
-		Db::name("link")->where('vid',$vid)->update(['track'=>1]);
+		Db::name("link")
+			->where('uid',$uid)
+			->where('track',1)
+			->update(['track'=>0]);
+		Db::name("link")
+			->where('uid',$uid)
+			->where('vid',$vid)
+			->update(['track'=>1]);
 		return true;
 	}
 
@@ -46,5 +52,14 @@ class Device extends Model
 			->join('device d','l.vid=d.vid')
 			->select();
 		return $list;
+	}
+
+	public function getTrack($uid){
+		$res=Db::table("link")
+			->where('uid',$uid)
+			->where('track',1)
+			->field('vid')
+			->select();
+		return $res[0]['vid'];
 	}
 }

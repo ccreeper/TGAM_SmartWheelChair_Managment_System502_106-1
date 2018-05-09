@@ -2,6 +2,7 @@
 namespace app\index\controller;
 use app\index\model\Log;
 use app\index\model\Douglas;
+use app\index\model\Device;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -9,10 +10,20 @@ use think\Session;
 class Data extends Controller
 {
 	public function historypath(){
+		$dev=new Device;
+		//uid替换
+		$uid=1;
+		$link=$dev->getList($uid);
+		$this->assign('links',$link);
 		return $this->fetch();
 	}
 
 	public function historydata(){
+		$dev=new Device;
+		//uid替换
+		$uid=1;
+		$link=$dev->getList($uid);
+		$this->assign('links',$link);
 		return $this->fetch();
 	}
 
@@ -22,7 +33,10 @@ class Data extends Controller
 
 	public function getPos(){
 		$log=new Log;
-		$vid=input("param.vid");
+		$dev=new Device;
+		//uid替换
+		$uid=1;
+		$vid=$dev->getTrack($uid);
 		$res=$log->getPos($vid);
 		echo json_encode($res);
 	}

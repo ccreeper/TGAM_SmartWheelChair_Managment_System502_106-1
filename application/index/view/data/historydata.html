@@ -54,7 +54,16 @@
                         <label style="opacity: 0">.</label>
                         <input type="time" class="form-control" id="endtime">
                     </div>
+                    <div class="col-md-3 m-b-15">
+                        <label>选择设备号：</label>
+                        <select id="vid_select" class="select">
+                            {volist name="links" id="vo" key="key"}
+                            <option value={$key-1}>{$vo.vid}</option>
+                            {/volist}
+                        </select>
+                    </div>
                 </div>
+
 
                 <div class="block-area" id="check" style="padding: 0">
                     <label class="checkbox-inline">
@@ -189,7 +198,8 @@
         });
 
         function search(){
-            if(!$("#begindate").val() || !$("#begintime").val() || !$("#enddate").val() || !$("#endtime").val()){
+            if(!$("#begindate").val() || !$("#begintime").val() || !$("#enddate").val() || !$("#endtime").val())
+            {
                 alert("请输入完整的时间段");
                 return ;
             }
@@ -197,7 +207,7 @@
             $.ajax({
                 type:"get",
                 url:"{:url('searchMeditation')}",
-                data:{vid:'asdsdcz1314123ac',begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                data:{vid:$("#vid_select").find('option:selected').text(),begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
                 dataType:"json",
                 success:function(result){
                     checkView();
@@ -207,14 +217,14 @@
                     meditationChart.update();
                 },
                 error: function (xml,status,thrown) {
-                    alert("数据获取失败,请确认查询时间段是否符合规范");
+                    alert("数据获取失败\n可能的原因：\n    1.查询时间段不符合规范\n    2.查询的数据不存在");
                 }  
             });
 
             $.ajax({
                 type:"get",
                 url:"{:url('searchBpmAndSpeed')}",
-                data:{vid:'asdsdcz1314123ac',begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                data:{vid:$("#vid_select").find('option:selected').text(),begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
                 dataType:"json",
                 success:function(result){
                     checkView();

@@ -10,7 +10,8 @@ class DeviceLink extends Controller
 	public function index(){
 		$dev=new Device;
 		//uid替换
-		$list=$dev->getList(1);
+		$uid=1;
+		$list=$dev->getList($uid);
 		$this->assign('devices',$list);
 		return $this->fetch();
 	}
@@ -20,7 +21,8 @@ class DeviceLink extends Controller
 			$vid=input('param.vid');
 			$dev=new Device;
 			//uid替换
-			$res=$dev->add(1,$vid);
+			$uid=1;
+			$res=$dev->add($uid,$vid);
 			if($res==1)
 				$this->error("该设备已关联");
 			else if($res==2)
