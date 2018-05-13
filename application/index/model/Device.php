@@ -50,7 +50,7 @@ class Device extends Model
 			->alias('l')
 			->where('uid',$uid)
 			->join('device d','l.vid=d.vid')
-			->select();
+			->paginate(8);
 		return $list;
 	}
 

@@ -10,7 +10,8 @@ class Repair extends Controller
 	public function index(){
 		$rep=new RepairModel;
 		//uid替换
-		$list=$rep->getList(1);		
+		$uid=1;
+		$list=$rep->getList($uid);
 		$this->assign('repair',$list);
 		return $this->fetch();
 	}
@@ -20,7 +21,8 @@ class Repair extends Controller
 		$content=input("param.content");
 		$rep=new RepairModel;
 		//uid替换
-		$info=$rep->add(1,$vid,$content);
+		$uid=1;
+		$info=$rep->add($uid,$vid,$content);
 		if($info==1)
 			$this->error("当前用户与该设备未关联");
 		else if($info==2)
@@ -48,5 +50,22 @@ class Repair extends Controller
 			}
 			$this->success("共".(count($pic))."张设备照片上传成功");
 		}
+	}
+
+	public function search(){
+		$tid=input("param.tid");
+		$rep=new RepairModel;
+		$res=$rep->search($tid);
+		if(!$res)
+			return;
+		echo json_encode($res);
+	}
+
+	public function getList(){
+		$rep=new RepairModel;
+		$uid=1;
+		$res=$rep->getList($uid);
+		var_dump($res);
+		echo json_encode($res);
 	}
 }

@@ -10,7 +10,7 @@ class RepairModel extends Model
 			->alias('r')
 			->where('uid',$uid)
 			->join('device d','r.vid=d.vid')
-			->select();
+			->paginate(7);
 		return $list;
 	}
 
@@ -42,5 +42,22 @@ class RepairModel extends Model
 		if(Db::name("repairphoto")->insert($data))
 			return true;
 		return false;
+	}
+
+	public function getPic($tid){
+		$res=Db::name("repairphoto")
+			->field("pic")
+			->where('tid',$tid)
+			->select();
+		return $res;
+	}
+
+	public function search($tid){
+		$res=Db::name("repair")
+			->alias('r')
+			->where('tid',$tid)
+			->join('device d','r.vid=d.vid')
+			->select();
+		return $res;
 	}
 }	

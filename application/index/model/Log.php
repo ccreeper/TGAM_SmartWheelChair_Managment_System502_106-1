@@ -19,7 +19,12 @@ class Log extends Model
 	}
 
 	public function getBattery($vid){
-		$res=Db::query("select * from log where vid='$vid' and uploaddate=(select max(uploaddate) from log)");
+		$res=Db::table('log')
+			->where('vid',$vid)
+			->order('uploaddate desc')
+			->limit(1)
+			->field('battery')
+			->select();
 		$battery=$res[0]['battery'];
 		return $battery;
 	}
@@ -49,6 +54,26 @@ class Log extends Model
 			->field('Meditation')
 			->select();
 		return $res;
+	}
+
+	public function getSpeed($vid){
+		$current=Db::table('log')
+			->where('vid',$vid)
+			->order('uploaddate desc')
+			->limit(1)
+			->field('speed')
+			->select();
+		return $current[0]['speed'];
+	}
+
+	public function getAttention($vid){
+		$current=Db::table('log')
+			->where('vid',$vid)
+			->order('uploaddate desc')
+			->limit(1)
+			->field('Attention')
+			->select();
+		return $current[0]['Attention'];
 	}
 
 	public function getLog2($vid,$begintime,$endtime){
