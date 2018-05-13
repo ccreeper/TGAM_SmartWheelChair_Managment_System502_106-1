@@ -95,7 +95,7 @@
 <script type="text/javascript">
     function UpdateStatus(vid){
         $.getJSON(
-            "{:url('getStatus')}",{"vid":"asdsdcz1314123ac"},function(json){
+            "{:url('getStatus')}",function(json){
                 // alert(json.online);
                 if(json.online==true){
                     $("#line_img").attr("src","__STATIC__/assets/img/shortcuts/online.png");
@@ -178,7 +178,6 @@
         $.ajax({
             type:"get",
             url:"{:url('getLog')}",
-            data:{vid:'asdsdcz1314123ac'},
             dataType:"json",
             success:function(result){
                 $.each(result,function(i,item){

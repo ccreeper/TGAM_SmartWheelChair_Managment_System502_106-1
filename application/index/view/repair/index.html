@@ -37,11 +37,16 @@
             <h4 class="page-title">报修记录</h4>
             <div class="block-area" id="button-tags">
                 <button class="btn" data-toggle="modal" href="#modalDefault">报修</button>
+                
+            </div>
+            <div class="block-area">
+                <input id="search_tid" class="input-sm col-md-4 message-search" type="text" placeholder="请输入要查询的报修单号..." style="background-image:none ;">
+                <button class="btn" style="margin-left: 10px;" onclick="searchRepair()">查询</button>
             </div>
             <!-- Table Striped -->
             <div class="block-area" id="tableStriped">
                 <div class="table-responsive">
-                    <table class="tile table table-bordered table-striped">
+                    <table class="tile table table-bordered table-striped" id="repair_table">
                         <thead>
                             <tr>
                                 <th>报修单号</th>
@@ -52,7 +57,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="repair_box">
                             {volist name="repair" id="vo"}
                             <tr>
                                 <td>{$vo.tid}</td>
@@ -71,6 +76,7 @@
                             {/volist}
                         </tbody>
                     </table>
+                    {$repair->render()}
                 </div>
             </div>
 
@@ -144,6 +150,45 @@
 <script type="text/javascript">
     function sendtid(tid){
         $("#modal-tid").val(tid);
+    }
+
+    function searchRepair(){
+        $("#repair_box").hide();
+        var tid=$("#search_tid").val();
+        if(tid==''){
+            $("#search_result").remove();
+            $("#repair_box").show();
+        }
+        else{
+            $("#search_result").remove();
+            $.ajax({
+                type:"get",
+                url:"{:url('search')}",
+                data:{tid:tid},
+                dataType:"json",
+                success:function(result){
+                    $.each(result,function(i,item){
+                        $("#repair_table").append(
+                                        "<tbody id='search_result' style='border:none;'>"+
+                                        "<tr>"+
+                                        "<td>"+item.tid+"</td>"+
+                                        "<td>"+item.vid+"</td>"+
+                                        "<td>"+item.vname+"</td>"+
+                                        "<td>"+item.content+"</td>"+
+                                        "<td>"+item.uploadtime+"</td>"+
+                                        "<td>"+
+                                            '<div class="btn-group m-b-10">'+
+                                                '<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="modal" href="#modalPic" onclick="sendtid('+item.tid+')">'+
+                                                    "上传照片"+
+                                                "</button>"+
+                                            "</div>"+
+                                        "</td>"+
+                                        "</tr>"+
+                                        "</tbody>");
+                    })
+                }
+            });
+        }
     }
 </script>
 </body>

@@ -1,5 +1,8 @@
 <?php
 namespace app\index\controller;
+use app\index\model\Log;
+use app\index\model\CommonUtil;
+use app\index\model\Device;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -12,59 +15,42 @@ class Index extends Controller
 	}
 
 	public function getStatus(){
-		$vid=input("param.vid");
-		$result['online']=self::isOnline($vid);
+		$log=new Log;
+		$dev=new Device;
+		//uid替换
+		$uid=1;
+		$vid=$dev->getTrack($uid);
+		$result['online']=$log->isOnline($vid);
 		if($result['online'])
-			$result['meditation']=self::getMeditation($vid);
-		$result['battery']=self::getBattery($vid);
+			$result['meditation']=$log->getMeditation($vid);
+		$result['battery']=$log->getBattery($vid);
 		echo json_encode($result);
 	}
 
-	public function isOnline($vid)
-	{
-		$current=Db::table('log')->where('vid',$vid)
-		->whereTime('uploaddate','-1 minutes')->order('uploaddate desc')->limit(1)->select();
-		if(empty($current))
-			return false;
-		return true;
-	}
-
-	public function getBattery($vid){
-		$res=Db::query("select * from log where vid='$vid' and uploaddate=(select max(uploaddate) from log)");
-		$battery=$res[0]['battery'];
-		return $battery;
-	}
-
-	public function getMeditation($vid){
-		$current=Db::table('log')->where('vid',$vid)
-		->whereTime('uploaddate','-1 minutes')->order('uploaddate desc')->limit(1)->select();
-		$meditation=$current[0]['Meditation'];
-		if($meditation<=40)
-			$res="疲劳";
-		else if($meditation<=70)
-			$res="兴奋";
-		else
-			$res="放松";
-		return $res;
-	}
-
 	public function getLog(){
-		$vid=input("param.vid");
-		$res=Db::table('log')->where('vid',$vid)->field('bpm,speed')
-		->order('uploaddate desc')->limit(50)->select();
+		$dev=new Device;
+		$log=new Log;
+		//uid替换
+		$uid=1;
+		$vid=$dev->getTrack($uid);
+		$res=$log->getLog($vid,50);
 		echo json_encode($res);
 	}
 	
 	public function insertData(){
-		$random_lat=self::randomFloat(20,50);
-		$random_lon=self::randomFloat(20,50);
+		$util=new CommonUtil;
+		$dev=new Device;
+		$uid=1;
+		$vid=$dev->getTrack($uid);
+		$random_lat=$util->randomFloat(20,50);
+		$random_lon=$util->randomFloat(20,50);
 		$random_bpm=rand(20,80);
 		$random_attention=rand(20,90);
 		$random_medition=rand(20,90);
 		$random_speed=rand(10,30);
 		$random_battery=rand(10,100);
 		$data=[
-			"vid"=>"asdsdcz1314123ac",
+			"vid"=>$vid,
 			"lat"=>$random_lat,
 			"lon"=>$random_lon,
 			"bpm"=>$random_bpm,
@@ -77,10 +63,6 @@ class Index extends Controller
 		Db::table("log")->insert($data);
 		$res['result']=true;
 		echo json_encode($res);
-	}
-
-	function randomFloat($min = 0, $max = 1) {
-		return $min + mt_rand() / mt_getrandmax() * ($max - $min);
 	}
 }
 
