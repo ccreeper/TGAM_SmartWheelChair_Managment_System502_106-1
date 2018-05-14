@@ -34,6 +34,19 @@ class DeviceLink extends Controller
 		}
 	}
 
+	public function addbytwocode(){
+		$uid=input('param.uid');
+		$vid=input('param.vid');
+		$dev=new Device;
+		$res=$dev->add($uid,$vid);
+		$json=[];
+		if($res==3)
+			$json['success']=1;
+		else
+			$json['success']=0;
+		return json($json);
+	}
+
 	public function delete($vid){
 		$dev=new Device;
 		$res=$dev->destory($vid);
@@ -51,5 +64,13 @@ class DeviceLink extends Controller
 		//uid替换
 		$json["res"]=$res;
 		echo json_encode($json);
+	}
+
+	public function getTrack(){
+		$uid=input("param.uid");
+		$dev=new Device;
+		$res=$dev->getTrack($uid);
+		$json["vid"]=$res;
+		return json($json);
 	}
 }

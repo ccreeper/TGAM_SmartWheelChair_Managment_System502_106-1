@@ -24,7 +24,8 @@ class Index extends Controller
 		if($result['online'])
 			$result['meditation']=$log->getMeditation($vid);
 		$result['battery']=$log->getBattery($vid);
-		echo json_encode($result);
+		// echo json_encode($result);
+		return json($result);
 	}
 
 	public function getLog(){
@@ -53,6 +54,8 @@ class Index extends Controller
 			"vid"=>$vid,
 			"lat"=>$random_lat,
 			"lon"=>$random_lon,
+			"acc"=>2,
+			"dir"=>14,
 			"bpm"=>$random_bpm,
 			"Attention"=>$random_attention,
 			"Meditation"=>$random_medition,
@@ -64,6 +67,8 @@ class Index extends Controller
 		$res['result']=true;
 		echo json_encode($res);
 	}
+
+
 }
 
 

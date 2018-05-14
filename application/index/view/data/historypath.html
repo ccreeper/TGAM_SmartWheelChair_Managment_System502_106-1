@@ -104,10 +104,16 @@
 
                 $("#mapcontainer").show();
                 var points=[];
+                var begindate=$("#begindate").val();
+                var begintime=$("#begintime").val();
+                var start=begindate+" "+begintime;
+                var enddate=$("#enddate").val();
+                var endtime=$("#endtime").val();
+                var end=enddate+" "+endtime;
                 $.ajax({
                     type:"get",
                     url:"{:url('searchHistoryPath')}",
-                    data:{vid:$("#vid_select").find('option:selected').text(),begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                    data:{vid:$("#vid_select").find('option:selected').text(),sdatetime:start,edatetime:end},
                     dataType:"json",
                     success:function(result){
                         var start_point=new BMap.Point(result[0].lon,result[0].lat);
