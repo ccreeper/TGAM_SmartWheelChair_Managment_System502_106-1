@@ -11,15 +11,18 @@ namespace app\user\model;
 
 class Mail
 {
-    public function __construct()
+    private $addr;
+    private $content;
+    private $subject;
+    public function __construct($addr,$subject,$content)
     {
-        $args=func_get_args();
-        $num=count($args);
-        if (method_exists($this,$f='__construct'.$num))
-        {
-            call_user_func_array(array($this,$f),$args);
-        }
+        $this->addr=$addr;
+        $this->subject=$subject;
+        $this->content=$content;
     }
-
+    public function sendit()
+    {
+        return mail($this->addr,$this->subject,$this->content);
+    }
 
 }

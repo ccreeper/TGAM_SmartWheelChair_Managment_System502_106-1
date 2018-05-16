@@ -10,18 +10,22 @@ use think\Session;
 class Data extends Controller
 {
 	public function historypath(){
-		$dev=new Device;
+        $user=unserialize(Session::get("userinfo"));
+        $dev=new Device;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$link=$dev->getList($uid);
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
 		$this->assign('links',$link);
 		return $this->fetch();
 	}
 
 	public function historydata(){
-		$dev=new Device;
+        $user=unserialize(Session::get("userinfo"));
+        $dev=new Device;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$link=$dev->getList($uid);
 		$this->assign('links',$link);
 		return $this->fetch();
@@ -32,10 +36,11 @@ class Data extends Controller
 	}
 
 	public function getPos(){
-		$log=new Log;
+        $user=unserialize(Session::get("userinfo"));
+        $log=new Log;
 		$dev=new Device;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$vid=$dev->getTrack($uid);
 		$res=$log->getPos($vid);
 		echo json_encode($res);

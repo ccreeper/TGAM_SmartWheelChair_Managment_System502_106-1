@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TGAM轮椅后台管理登陆</title>
+    <title>TGAM轮椅后台管理</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
@@ -85,7 +85,7 @@
                                 <input type="email" name="email" id="email" class="form-control" placeholder="您注册时填写的邮箱">
                             </div>
                             <div class="form-group">
-                                <label style="color: white">密码</label>
+                                <label style="color: white">密码(<a href="{:url('iforgot')}">忘记密码</a>)</label>
                                 <input type="password" name="password" id="passwd" class="form-control" placeholder="密码">
                             </div>
                             <div class="form-group">
@@ -95,14 +95,30 @@
                             <div class="form-group">
                                 <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
                             </div>
-                            <button type="button" onclick="commit();" class="btn">登陆</button>
+                            <button type="button" onclick="commit();" class="btn">登录</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="faild" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">激活</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您的账户没有被激活，请点击验证邮件中的链接激活，若链接已经失效请</p><button class="btn btn-primary" onclick="nresend()">点击这里</button><br>
+                    <a id="mailaddr" href="">去激活-></a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="resend();" class="btn btn-primary">没收到？</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -132,11 +148,17 @@
                 document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
                 if(status === 1)
                 {
-                    window.location.href="{:url('Index/index')}";
+                    window.location.href="{:url('index/index/index')}";
                 }
                 else if(status === 2)
                 {
                     $("#captcha").css("border","2px solid red");
+                }
+                else if(status === 3)
+                {
+                    var mailaddr=formdata.get("email").split("@");
+                    $("#mailaddr").attr("href","https://mail."+mailaddr[1]);
+                    $("#faild").modal('show');
                 }
                 else
                 {
@@ -150,6 +172,58 @@
                 alert("网络异常！");
             }
         });
+    }
+    function resend()
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('Login/resend')}",
+            data:"email="+$("email").val(),
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    alert('已经重新发送邮件！');
+                }
+                else
+                {
+                    alert("邮件发送失败！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        })
+    }
+    function nresend()
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('Login/nresend')}",
+            data:"email="+$("#email").val(),
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    alert('已经重新发送邮件！');
+                }
+                else
+                {
+                    alert("邮件发送失败！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        })
     }
 </script>
 <!--[if lt IE 10]>

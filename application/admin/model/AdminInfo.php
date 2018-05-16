@@ -11,6 +11,7 @@ use think\Db;
 
 class AdminInfo
 {
+    private $adminid;
     private $adminname;
     private $password;
     public function __construct()
@@ -24,6 +25,7 @@ class AdminInfo
     }
     public function __construct1($DBdata)
     {
+        $this->adminid=$DBdata["adminid"];
         $this->adminname=$DBdata["adminname"];
         $this->password=new AdminPassword($DBdata);
     }
@@ -54,5 +56,28 @@ class AdminInfo
             echo "Err";
         }
     }
-
+    public function Update($key,$value)
+    {
+        $data=[
+            'uid'=>$this->uid,
+            $key =>$value
+        ];
+        $res=Db::name("users")->update($data);
+        return $res;
+    }
+    public function getAdminid()
+    {
+        return $this->adminid;
+    }
+    public function getAdminname()
+    {
+        return $this->adminname;
+    }
+    public function getInfo()
+    {
+        $arr=[];
+        $arr["adminid"]=$this->getAdminid();
+        $arr["adminname"]=$this->getAdminname();
+        return $arr;
+    }
 }

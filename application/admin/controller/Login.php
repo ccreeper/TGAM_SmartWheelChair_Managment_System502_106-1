@@ -6,6 +6,7 @@
  * Time: 下午12:10
  */
 namespace app\admin\controller;
+use app\admin\model\AdminInfo;
 use app\admin\model\AdminPassword;
 use think\Db;
 use think\Controller;
@@ -39,7 +40,9 @@ class Login extends Controller
             $aPass=new AdminPassword($res);
             if($aPass->verify($password))
             {
-                Session::set("adminid",$res["adminid"]);
+                Session::clear();
+                $adminInfo=new AdminInfo($res);
+                Session::set("admininfo",serialize($adminInfo->getInfo()));
                 $report["status"]="1";
                 echo json_encode($report);
             }

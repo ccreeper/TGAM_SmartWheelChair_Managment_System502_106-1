@@ -8,8 +8,9 @@ use think\Session;
 class Shortcut extends Controller
 {
 	public function index(){
-		//uid替换
-		$uid=1;
+        $user=unserialize(Session::get("userinfo"));
+        //uid替换
+		$uid=$user["uid"];
 		$shortcut=new ShortcutModel;
 		$link=$shortcut->getLink($uid);
 		$this->assign('links',$link);
@@ -19,6 +20,8 @@ class Shortcut extends Controller
 			$data[$key]=$list;
 		}
 		$this->assign('pics',$data);
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
 		return $this->fetch();
 	}
 

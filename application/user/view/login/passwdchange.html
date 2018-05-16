@@ -66,13 +66,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>欢迎</strong> 注册账号方便您管理智能轮椅</h1>
-                    <div class="description">
-                        <p>
-                            注册账号是免费的<br>
-                            您还可以通过客户端注册 <a href="#" style=""><strong><u>点这里</u></strong></a>下载安卓手机客户端
-                        </p>
-                    </div>
+                    <h1>密码修改</h1>
                 </div>
             </div>
             <div class="row">
@@ -82,26 +76,19 @@
                 <div class="col-sm-5 form-box">
                     <div class="form-top">
                         <div class="form-top-left">
-                            <h3>注册账号</h3>
-                            <p>请填写以下信息以获取您的账号</p>
+                            <h3>修改</h3>
+                            <p>请填写以下信息</p>
                         </div>
                         <div class="form-top-right">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-lock"></i>
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" id="signup_form">
-                            <div class="form-group">
-                                <label id="email-L" class="sr-only" for="form-email">电子邮箱</label>
-                                <input type="text" name="email" placeholder="电子邮箱(确保收信正常)" class="form-email form-control" id="form-email">
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only">您的昵称</label>
-                                <input type="text" name="username" placeholder="昵称" class="form-first-name form-control" id="username">
-                            </div>
+                        <form role="form" id="passwd_form">
+                            <input type="hidden" name="uid" value="{$uid}">
                             <div class="form-group">
                                 <label class="sr-only">密码</label>
-                                <input type="password" name="password" placeholder="登录密码" class="form-last-name form-control" id="passwd">
+                                <input type="password" name="password" placeholder="新的密码" class="form-last-name form-control" id="passwd">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">密码</label>
@@ -114,7 +101,7 @@
                             <div class="form-group">
                                 <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
                             </div>
-                            <button type="button" onclick="commit();" class="btn">注册</button>
+                            <button type="button" onclick="commit();" class="btn">提交</button>
                         </form>
                     </div>
                 </div>
@@ -127,14 +114,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">成功！</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    <p>恭喜！注册成功，一封激活邮件已经发送到您的邮箱!</p><br>
-                    <a id="mailaddr" href="">去激活-></a>
+                    <p>密码修改成功!</p><br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="resend();" class="btn btn-primary">没收到？</button>
                 </div>
             </div>
         </div>
@@ -150,69 +135,9 @@
 <script src="__STATIC__/assets/js/md5.js"></script>
 <script src="__STATIC__/user/signup/assets/js/scripts.js"></script>
 <script>
-    var eisOK=true;
-    $("#form-email").change(function check_distinct()
-    {
-        $.ajax({
-            type:"post",
-            url:"{:url('Signup/check_distinct')}",
-            data:"email="+$("#form-email").val(),
-            success: function (result)
-            {
-                console.log(result);//打印服务端返回的数据(调试用)
-                var data=$.parseJSON(result);
-                var status=parseInt(data.status);
-                if(status === 1)
-                {
-                    $("#form-email").css("border","0px");
-                    eisOK=true;
-                }
-                else
-                {
-                    $("#form-email").css("border","2px solid red");
-                    $("#form-email").val("此邮箱已经被注册！");
-                    eisOK=false;
-                }
-            },
-            error : function()
-            {
-                alert("网络异常！");
-            }
-        })
-    });
-    function resend()
-    {
-        $.ajax({
-            type:"post",
-            url:"{:url('Signup/resend')}",
-            data:"email="+$("#form-email").val(),
-            success: function (result)
-            {
-                console.log(result);//打印服务端返回的数据(调试用)
-                var data=$.parseJSON(result);
-                var status=parseInt(data.status);
-                if(status === 1)
-                {
-                    alert('已经重新发送邮件！');
-                }
-                else
-                {
-                   alert("邮件发送失败！");
-                }
-            },
-            error : function()
-            {
-                alert("网络异常！");
-            }
-        })
-    }
     function commit()
     {
-        var formdata=new FormData(document.getElementById("signup_form"));
-        if(!eisOK)
-        {
-            return false;
-        }
+        var formdata=new FormData(document.getElementById("passwd_form"));
         if(formdata.get("password")!==formdata.get("repassword"))
         {
             $("#passwd").css("border","2px solid red");
@@ -222,30 +147,23 @@
         formdata.set("password",hex_md5(formdata.get("password")));
         $.ajax({
             type:"post",
-            url:"{:url('Signup/signup')}",
+            url:"{:url('passwdchanged')}",
             data:formdata,
             processData:false,
             contentType:false,
             success: function (result)
             {
                 console.log(result);//打印服务端返回的数据(调试用)
-                console.log("password(md5):"+formdata.get("password"));
                 var data=$.parseJSON(result);
                 var status=parseInt(data.status);
                 document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
                 if(status === 1)
                 {
-                    var mailaddr=formdata.get("email").split("@");
-                    $("#mailaddr").attr("href","https://mail."+mailaddr[1]);
                     $("#success").modal('show');
-                }
-                else if(status === 2)
-                {
-                    $("#captcha").css("border","2px solid red");
                 }
                 else
                 {
-                    alert("邮件发送失败！");
+                    alert("未知错误");
                 }
 
             },

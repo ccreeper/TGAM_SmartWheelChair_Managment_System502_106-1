@@ -13,7 +13,11 @@ class Index extends Controller
         }
         else
         {
-            $this->fetch();
+            $this->redirect('index/index/index');
         }
+    }
+    public function _404page()
+    {
+        return $this->fetch();
     }
 }

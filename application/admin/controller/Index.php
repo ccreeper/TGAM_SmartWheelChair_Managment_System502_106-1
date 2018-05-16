@@ -7,13 +7,6 @@ class Index extends Controller
 {
     public function index()
     {
-        if(!Session::has('adminid'))
-        {
-            $this->redirect('Login/index');
-        }
-        else
-        {
-            return $this->fetch();
-        }
+        return $this->fetch();
     }
 }
