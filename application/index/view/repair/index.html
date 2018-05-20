@@ -37,7 +37,6 @@
             <h4 class="page-title">报修记录</h4>
             <div class="block-area" id="button-tags">
                 <button class="btn" data-toggle="modal" href="#modalDefault">报修</button>
-                
             </div>
             <div class="block-area">
                 <input id="search_tid" class="input-sm col-md-4 message-search" type="text" placeholder="请输入要查询的报修单号..." style="background-image:none ;">
@@ -96,9 +95,13 @@
                         <div class="form-group">
                             <label for="inputUser" class="col-md-2 control-label">设备号:  </label>
                             <div  class="col-md-6">
-                              <input type="text" class="form-control" id="inputUser" placeholder="设备号" name="vid"> 
-                          </div>
-                      </div>
+                                <select class="select" name="vid">
+                                    {volist name="links" id="vo" key="key"}
+                                    <option value={$vo.vid}>{$vo.vid}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
 
                       <div class="form-group">
                         <label for="inputContent" class="col-md-2 control-label">原因:  </label>

@@ -6,8 +6,6 @@ body {
     color: #888;
     line-height: 30px;
     text-align: center;
-	overflow-x:hidden;
-	overflow-y:hidden;
 }
 
 strong { font-weight: 500; }
@@ -119,7 +117,7 @@ ul.navbar-nav {
 /***** Top content *****/
 
 .inner-bg {
-    padding: 16px 0 150px 0;
+    padding: 60px 0 150px 0;
 }
 
 .top-content .text {
@@ -155,7 +153,7 @@ ul.navbar-nav {
 
 .form-top {
 	overflow: hidden;
-	padding: 0 25px 0px 25px;
+	padding: 0 25px 15px 25px;
 	background: #444;
 	background: rgba(0, 0, 0, 0.35);
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
@@ -206,11 +204,7 @@ ul.navbar-nav {
 @media (min-width: 768px) and (max-width: 991px) {}
 
 @media (max-width: 767px) {
-	body
-    {
-        overflow-x: auto;
-        overflow-y: auto;
-    }
+	
 	.navbar { padding-top: 0; }
 	.navbar.navbar-no-bg { background: #333; background: rgba(51, 51, 51, 0.9); }
 	.navbar-brand { height: 60px; margin-left: 15px; }
@@ -220,7 +214,7 @@ ul.navbar-nav {
 	.inner-bg { padding: 60px 0 110px 0; }
 	.top-content .top-big-link { margin-top: 25px; }
 	.top-content .top-big-link a.btn { margin-top: 10px; }
-	.top-content .form-box { padding-top: 80px; }
+	.top-content .form-box { padding-top: 8px; }
 
 }
 
@@ -243,7 +237,7 @@ only screen and (                min-resolution: 2dppx) {
 	
 	/* logo */
     .navbar-brand {
-    	background-image: url(/wheelchair/public/static/assets/img/LoginCGI/logo@2x.png) !important; background-repeat: no-repeat !important; background-size: 123px 49px !important;
+    	background-image: url(/wheelchair/public/static/assets/img/loginCGI/logo@2x.png) !important; background-repeat: no-repeat !important; background-size: 123px 49px !important;
     }
 	
 }

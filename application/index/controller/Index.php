@@ -11,37 +11,47 @@ class Index extends Controller
 {
 	public function index()
 	{
-		return $this->fetch();
+        $user=unserialize(Session::get("userinfo"));
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
+        return $this->fetch();
 	}
 
-	public function getStatus(){
-		$log=new Log;
+	public function getStatus()
+    {
+        $user=unserialize(Session::get("userinfo"));
+        $log=new Log;
 		$dev=new Device;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$vid=$dev->getTrack($uid);
-		$result['online']=$log->isOnline($vid);
-		if($result['online'])
-			$result['meditation']=$log->getMeditation($vid);
-		$result['battery']=$log->getBattery($vid);
-		// echo json_encode($result);
-		return json($result);
+		if($vid){
+			$result['online']=$log->isOnline($vid);
+			if($result['online'])
+				$result['meditation']=$log->getMeditation($vid);
+			$result['battery']=$log->getBattery($vid);
+			// echo json_encode($result);
+			return json($result);
+		}
+		return ;
 	}
 
 	public function getLog(){
-		$dev=new Device;
+        $user=unserialize(Session::get("userinfo"));
+        $dev=new Device;
 		$log=new Log;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$vid=$dev->getTrack($uid);
 		$res=$log->getLog($vid,50);
 		echo json_encode($res);
 	}
 	
 	public function insertData(){
-		$util=new CommonUtil;
+        $user=unserialize(Session::get("userinfo"));
+        $util=new CommonUtil;
 		$dev=new Device;
-		$uid=1;
+		$uid=$user["uid"];
 		$vid=$dev->getTrack($uid);
 		$random_lat=$util->randomFloat(20,50);
 		$random_lon=$util->randomFloat(20,50);
@@ -68,6 +78,11 @@ class Index extends Controller
 		echo json_encode($res);
 	}
 
+	public function logout()
+    {
+        Session::clear();
+        echo "ok!";
+    }
 
 }
 

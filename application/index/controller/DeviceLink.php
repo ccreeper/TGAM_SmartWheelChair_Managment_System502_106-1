@@ -8,20 +8,24 @@ use think\Session;
 class DeviceLink extends Controller
 {
 	public function index(){
-		$dev=new Device;
+        $user=unserialize(Session::get("userinfo"));
+        $dev=new Device;
 		//uid替换
-		$uid=1;
+		$uid=$user["uid"];
 		$list=$dev->getList($uid);
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
 		$this->assign('devices',$list);
 		return $this->fetch();
 	}
 
 	public function add(){
+
 		if(request()->isPost()){
-			$vid=input('param.vid');
+        	$user=unserialize(Session::get("userinfo"));
+            $vid=input('param.vid');
 			$dev=new Device;
-			//uid替换
-			$uid=1;
+			$uid=$user["uid"];
 			$res=$dev->add($uid,$vid);
 			if($res==1)
 				$this->error("该设备已关联");
@@ -58,9 +62,10 @@ class DeviceLink extends Controller
 	}
 
 	public function track(){
-		$vid=input("param.vid");
+        $user=unserialize(Session::get("userinfo"));
+        $vid=input("param.vid");
 		$dev=new Device;
-		$res=$dev->setTrack(1,$vid);
+		$res=$dev->setTrack($user["uid"],$vid);
 		//uid替换
 		$json["res"]=$res;
 		echo json_encode($json);

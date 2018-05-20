@@ -6,15 +6,15 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="__STATIC__/assets/img/profile-pic.jpg" alt="">
+                            <img id="sidebar-userpic" class="profile-pic animated" src="__STATIC__/userpic/{$pic}" alt="">
                         </a>
                         <ul class="dropdown-menu profile-menu">
-                            <li><a href="">Settings</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                            {neq name=":request()->controller()" value="Settings"}
+                                <li><a href="{:url('settings/index')}">用户设置</a> <i class="icon left"><i class="fa fa-gears"></i></i></li>
+                            {/neq}
                         </ul>
-                        <h4 class="m-0">Malinda Hollaway</h4>
-                        @malinda-h
+                        <h4 id="sidebar-username" class="m-0">{$uname}</h4>
                     </div>
-                    
                     <!-- Calendar -->
                     <div class="s-widget m-b-25">
                         <div id="sidebar-calendar"></div>
@@ -62,10 +62,29 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a class="sa-side-ui" href="">
+                        <a class="sa-side-ui" onclick="logout()">
                             <span class="menu-item">注销</span>
                         </a>
                     </li>
                 </ul>
-
             </aside>
+            <script>
+                function logout()
+                {
+                    $.ajax({
+                        type:"post",
+                        url:"{:url('index/index/logout')}",
+                        data:null,
+                        processData:false,
+                        contentType:false,
+                        success: function (result)
+                        {
+                            window.location.href="{:url('user/login/index')}";
+                        },
+                        error : function()
+                        {
+                            alert("网络异常！");
+                        }
+                    })
+                }
+            </script>

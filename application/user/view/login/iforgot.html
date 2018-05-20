@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +11,8 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="__STATIC__/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="__STATIC__/assets/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="__STATIC__/assets/css/form-elements.css">
-    <link rel="stylesheet" href="__STATIC__/user/login/assets/css/style.css">
+    <link rel="stylesheet" href="__STATIC__/user/signup/assets/css/form-elements.css">
+    <link rel="stylesheet" href="__STATIC__/user/signup/assets/css/style.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,12 +22,11 @@
     <![endif]-->
 
     <!-- Favicon and touch icons -->
-    <link rel="shortcut icon" href="__STATIC__assets/ico/favicon.png">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="__STATIC__/assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="__STATIC__/assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="__STATIC__/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="__STATIC__/assets/ico/apple-touch-icon-57-precomposed.png">
-
 </head>
 
 <body>
@@ -38,20 +36,22 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">TGAM轮椅管理后台登录</a>
+            <a class="navbar-brand" href="index.html"></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="top-navbar-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <span class="li-text">没有账号？注册一个吧！-></span>
+                    <span class="li-text">
+						如果您有任何问题，请联系我们->
+                    </span>
                     <span class="li-social">
-                        <a href="{:url('signup')}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a href="Mailto:test@test.com"><i class="fa fa-envelope"></i></a>
                     </span>
                 </li>
             </ul>
@@ -61,32 +61,33 @@
 
 <!-- Top content -->
 <div class="top-content">
+
     <div class="inner-bg">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 book" style="color: white;font-size: 32px;">
-                    <p>
-                        登录系统以管理您的智能轮椅
-                    </p>
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1>忘记密码了？</h1>
                 </div>
-                <div class="col-sm-5 col-sm-offset-7 form-box">
+            </div>
+            <div class="row">
+                <div class="col-sm-6 book">
+                    <img src="__STATIC__/assets/img/ebook.png" alt="">
+                </div>
+                <div class="col-sm-5 form-box">
                     <div class="form-top">
                         <div class="form-top-left">
-                            <h3>登录</h3>
+                            <h3>找回</h3>
+                            <p>请填写以下信息以找回密码</p>
                         </div>
                         <div class="form-top-right">
-                            <i class="fa fa-sign-in"></i>
+                            <i class="fa fa-lock"></i>
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" id="loginform" class="registration-form">
+                        <form role="form" id="ifogot_form">
                             <div class="form-group">
-                                <label style="color: white">用户名</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="您注册时填写的邮箱">
-                            </div>
-                            <div class="form-group">
-                                <label style="color: white">密码(<a href="{:url('iforgot')}">忘记密码</a>)</label>
-                                <input type="password" name="password" id="passwd" class="form-control" placeholder="密码">
+                                <label id="email-L" class="sr-only" for="form-email">电子邮箱</label>
+                                <input type="text" name="email" placeholder="电子邮箱(您注册的账号)" class="form-email form-control" id="form-email">
                             </div>
                             <div class="form-group">
                                 <label style="color: white">验证码(<a href="#" onclick="getElementById('captchaImg').src=getElementById('captchaImg').src+'?'">点击刷新</a>)</label>
@@ -95,23 +96,23 @@
                             <div class="form-group">
                                 <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
                             </div>
-                            <button type="button" onclick="commit();" class="btn">登录</button>
+                            <button type="button" onclick="commit();" class="btn">提交</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="faild" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <!-- Modal -->
+    <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">激活</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    <p>您的账户没有被激活，请点击验证邮件中的链接激活，若链接已经失效请</p><button class="btn btn-primary" onclick="nresend()">点击这里</button><br>
-                    <a id="mailaddr" href="">去激活-></a>
+                    <p>一封密码找回邮件已经发送到您的邮箱!</p><br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="resend();" class="btn btn-primary">没收到？</button>
@@ -123,35 +124,57 @@
 
 
 <!-- Javascript -->
-<script src="__STATIC__/assets/js/LoginCGI/jquery-1.11.1.min.js"></script>
+<script src="__STATIC__/user/signup/assets/js/jquery-1.11.1.min.js"></script>
 <script src="__STATIC__/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="__STATIC__/user/login/assets/js/jquery.backstretch.min.js"></script>
-<script src="__STATIC__/assets/js/LoginCGI/retina-1.1.0.min.js"></script>
+<script src="__STATIC__/user/signup/assets/js/jquery.backstretch.min.js"></script>
+<script src="__STATIC__/user/signup/assets/js/retina-1.1.0.min.js"></script>
 <script src="__STATIC__/assets/js/md5.js"></script>
-<script src="__STATIC__/user/login/assets/js/scripts.js"></script>
+<script src="__STATIC__/user/signup/assets/js/scripts.js"></script>
 <script>
-    function commit()
+    function resend()
     {
-        var formdata=new FormData(document.getElementById("loginform"));
-        formdata.set("password",hex_md5(formdata.get("password")));
         $.ajax({
             type:"post",
-            url:"{:url('logincheck')}",
+            url:"{:url('Login/resend')}",
+            data:"email="+$("#form-email").val(),
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    alert('已经重新发送邮件！');
+                }
+                else
+                {
+                    alert("邮件发送失败！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        })
+    }
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("ifogot_form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('iforgotd')}",
             data:formdata,
             processData:false,
             contentType:false,
             success: function (result)
             {
-                $("#email").css("border","0px");
-                $("#passwd").css("border","0px");
-                $("#captcha").css("border","0px");
                 console.log(result);//打印服务端返回的数据(调试用)
                 var data=$.parseJSON(result);
                 var status=parseInt(data.status);
                 document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
                 if(status === 1)
                 {
-                    window.location.href="{:url('index/index/index')}";
+                    $("#success").modal('show');
                 }
                 else if(status === 2)
                 {
@@ -159,14 +182,12 @@
                 }
                 else if(status === 3)
                 {
-                    var mailaddr=formdata.get("email").split("@");
-                    $("#mailaddr").attr("href","https://mail."+mailaddr[1]);
-                    $("#faild").modal('show');
+                    alert("邮件发送失败！");
                 }
                 else
                 {
+                    $("#email").text("不存在的邮件地址！");
                     $("#email").css("border","2px solid red");
-                    $("#passwd").css("border","2px solid red");
                 }
 
             },
@@ -176,66 +197,10 @@
             }
         });
     }
-    function resend()
-    {
-        $.ajax({
-            type:"post",
-            url:"{:url('Login/resend')}",
-            data:"email="+$("email").val(),
-            success: function (result)
-            {
-                console.log(result);//打印服务端返回的数据(调试用)
-                var data=$.parseJSON(result);
-                var status=parseInt(data.status);
-                if(status === 1)
-                {
-                    alert('已经重新发送邮件！');
-                }
-                else
-                {
-                    alert("邮件发送失败！");
-                }
-            },
-            error : function()
-            {
-                alert("网络异常！");
-            }
-        })
-    }
-    function nresend()
-    {
-        $.ajax({
-            type:"post",
-            url:"{:url('Login/nresend')}",
-            data:"email="+$("#email").val(),
-            success: function (result)
-            {
-                console.log(result);//打印服务端返回的数据(调试用)
-                var data=$.parseJSON(result);
-                var status=parseInt(data.status);
-                if(status === 1)
-                {
-                    alert('已经重新发送邮件！');
-                }
-                else
-                {
-                    alert("邮件发送失败！");
-                }
-            },
-            error : function()
-            {
-                alert("网络异常！");
-            }
-        })
-    }
 </script>
 <!--[if lt IE 10]>
-<script src="__STATIC__/assets/js/LoginCGI/placeholder.js"></script>
+<script src="__STATIC__/user/signup/assets/js/placeholder.js"></script>
 <![endif]-->
-<script>
-
-</script>
-
 
 </body>
 

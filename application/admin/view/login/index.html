@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,23 +63,23 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form id="loginform">
                             <div class="form-group">
                                 <label style="color: white">员工ID</label>
-                                <input type="text" class="form-control" placeholder="员工ID">
+                                <input type="text" name="adminname" class="form-control" placeholder="员工ID" id="adminname"/>
                             </div>
                             <div class="form-group">
                                 <label style="color: white">密码</label>
-                                <input type="password" class="form-control" placeholder="密码">
+                                <input type="password" name="password" class="form-control" placeholder="密码" id="adminpasswd"/>
                             </div>
                             <div class="form-group">
                                 <label style="color: white">验证码(<a href="#" onclick="getElementById('captchaImg').src=getElementById('captchaImg').src+'?'">点击刷新</a>)</label>
-                                <input type="text" class="form-control" placeholder="验证码">
+                                <input type="text" name="captcha" class="form-control" placeholder="验证码" id="captcha"/>
                             </div>
                             <div class="form-group">
                                 <img id="captchaImg" src="{:captcha_src()}" alt="captcha">
                             </div>
-                            <button type="submit" style="width: 100%;background: #0e90d2;color: white;border: 0px;border-radius: 3px">登陆</button>
+                            <input type="button" value="登录" onclick="commit();" style="width: 100%;background: #0e90d2;color: white;border: 0px;border-radius: 3px"/>
                         </form>
                     </div>
                 </div>
@@ -96,7 +95,46 @@
 <script src="__STATIC__/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="__STATIC__/assets/js/LoginCGI/retina-1.1.0.min.js"></script>
 <script src="__STATIC__/admin/login/assets/js/scripts.js"></script>
+<script src="__STATIC__/assets/js/md5.js"></script>
+<script>
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("loginform"));
+        formdata.set("password",hex_md5(formdata.get("password")));
+      $.ajax({
+          type:"post",
+          url:"{:url('logincheck')}",
+          data:formdata,
+          processData:false,
+          contentType:false,
+          success: function (result)
+          {
+              // console.log(result);//打印服务端返回的数据(调试用)
+              var data=$.parseJSON(result);
+              var status=parseInt(data.status);
+              document.getElementById('captchaImg').src=document.getElementById('captchaImg').src+'?';
+              if(status === 1)
+              {
+                  window.location.href="{:url('index/index')}";
+              }
+              else if(status === 2)
+              {
+                  $("#captcha").css("border","2px solid red");
+              }
+              else
+              {
+                  $("#adminname").css("border","2px solid red");
+                  $("#adminpasswd").css("border","2px solid red");
+              }
 
+          },
+          error : function()
+          {
+              alert("网络异常！");
+          }
+      });
+    }
+</script>
 <!--[if lt IE 10]>
 <script src="__STATIC__/assets/js/LoginCGI/placeholder.js"></script>
 <![endif]-->
