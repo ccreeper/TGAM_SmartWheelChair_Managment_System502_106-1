@@ -6,12 +6,14 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="__STATIC__/userpic/{$pic}" alt="">
+                            <img id="sidebar-userpic" class="profile-pic animated" src="__STATIC__/userpic/{$pic}" alt="">
                         </a>
                         <ul class="dropdown-menu profile-menu">
-                            <li><a href="">用户设置</a> <i class="icon left"><i class="fa fa-gears"></i></i></li>
+                            {neq name=":request()->controller()" value="Settings"}
+                                <li><a href="{:url('settings/index')}">用户设置</a> <i class="icon left"><i class="fa fa-gears"></i></i></li>
+                            {/neq}
                         </ul>
-                        <h4 class="m-0">{$uname}</h4>
+                        <h4 id="sidebar-username" class="m-0">{$uname}</h4>
                     </div>
                     <!-- Calendar -->
                     <div class="s-widget m-b-25">

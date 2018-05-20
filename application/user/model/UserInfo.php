@@ -79,14 +79,14 @@ class UserInfo
             $key =>$value
         ];
         $res=Db::name("users")->update($data);
+        $this->refresh();
         return $res;
-
     }
     public function renewToken()
     {
         $newtoken=md5(date("Ymd").$this->email);
         $this->token=$newtoken;
-        if($this->Update('token',$newtoken)==0)
+        if(!$this->Update('token',$newtoken))
         {
             return true;
         }
@@ -95,10 +95,13 @@ class UserInfo
             return false;
         }
     }
-
-    /**
-     * @return mixed
-     */
+    public function refresh()
+    {
+       $DBdata=Db::name("users")->where("uid",$this->uid)->find();
+       $this->username=$DBdata["username"];
+       $this->pic=$DBdata["pic"];
+       $this->email=$DBdata["email"];
+    }
     public function getUid()
     {
         return $this->uid;
@@ -128,6 +131,7 @@ class UserInfo
         $arr=[];
         $arr["uid"]=$this->getUid();
         $arr["username"]=$this->getUsername();
+        $arr["email"]=$this->getEmail();
         $arr["pic"]=$this->getPic();
         return $arr;
     }

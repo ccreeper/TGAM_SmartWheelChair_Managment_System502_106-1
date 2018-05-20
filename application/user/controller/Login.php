@@ -239,5 +239,40 @@ class Login extends Controller
             echo "Error!";
         }
     }
-
+    public function emailchange()
+    {
+        $token=$_GET["token"];
+        $email=$_GET["email"];
+        if(strlen($token)!=32)
+        {
+            $this->redirect("Index/_404page");
+        }
+        else
+        {
+            $res=Db::name('users')->where("token",$token)->find();
+            if($res!=null)
+            {
+                if(md5(date("Ymd").$res["email"])==$token)
+                {
+                   $user=new UserInfo($res);
+                   if($user->Update("email",$email))
+                   {
+                       $this->success("变更成功！","Login/index");
+                   }
+                   else
+                   {
+                       $this->error("系统错误");
+                   }
+                }
+                else
+                {
+                    $this->redirect("Index/_404page");
+                }
+            }
+            else
+            {
+                $this->redirect("Index/_404page");
+            }
+        }
+    }
 }

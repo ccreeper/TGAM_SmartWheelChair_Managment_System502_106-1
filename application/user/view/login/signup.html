@@ -208,6 +208,9 @@
     }
     function commit()
     {
+        $("#passwd").css("border","0px");
+        $("#repasswd").css("border","0px");
+        $("#captcha").css("border","0px");
         var formdata=new FormData(document.getElementById("signup_form"));
         if(!eisOK)
         {

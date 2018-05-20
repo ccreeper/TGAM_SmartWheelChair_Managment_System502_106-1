@@ -142,6 +142,9 @@
             contentType:false,
             success: function (result)
             {
+                $("#email").css("border","0px");
+                $("#passwd").css("border","0px");
+                $("#captcha").css("border","0px");
                 console.log(result);//打印服务端返回的数据(调试用)
                 var data=$.parseJSON(result);
                 var status=parseInt(data.status);
