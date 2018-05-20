@@ -10,7 +10,7 @@ class Device extends Model
 			->where('vid',$vid)
 			->count();
 		$info=Db::name("device")
-			->where('vid',$vid)
+			->where('vid',md5($vid))
 			->count();
 
 		if($num>0)
@@ -19,7 +19,7 @@ class Device extends Model
 			return 2;
 		$data=[
 			"uid"=>$uid,
-			"vid"=>$vid,
+			"vid"=>md5($vid),
 			"linkdate"=>date("Y-m-d")
 		];
 		if(Db::name("link")->insert($data))
@@ -59,7 +59,7 @@ class Device extends Model
 			->where('uid',$uid)
 			->where('track',1)
 			->field('vid')
-			->select();
-		return $res[0]['vid'];
+			->find();
+		return $res['vid'];
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 use app\index\model\RepairModel;
+use app\index\model\Device;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -10,9 +11,12 @@ class Repair extends Controller
 	public function index(){
         $user=unserialize(Session::get("userinfo"));
         $rep=new RepairModel;
+        $dev=new Device;
 		//uid替换
 		$uid=$user["uid"];
 		$list=$rep->getList($uid);
+		$link=$dev->getList($uid);
+		$this->assign('links',$link);
 		$this->assign('repair',$list);
         $this->assign("pic",$user["pic"]);
         $this->assign("uname",$user["username"]);

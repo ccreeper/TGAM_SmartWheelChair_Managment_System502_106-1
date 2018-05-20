@@ -28,10 +28,15 @@ class Data extends Controller
 		$uid=$user["uid"];
 		$link=$dev->getList($uid);
 		$this->assign('links',$link);
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
 		return $this->fetch();
 	}
 
 	public function realposition(){
+        $user=unserialize(Session::get("userinfo"));
+        $this->assign("pic",$user["pic"]);
+        $this->assign("uname",$user["username"]);
 		return $this->fetch();
 	}
 
@@ -43,26 +48,32 @@ class Data extends Controller
 		$uid=$user["uid"];
 		$vid=$dev->getTrack($uid);
 		$res=$log->getPos($vid);
-		echo json_encode($res);
+		if(!$res)
+			return;
+		return json($res);
+	}
+
+	public function getRealtimePos(){
+		$uid=input("param.uid");
+		$log=new Log;
+		$dev=new Device;
+		$vid=$dev->getTrack($uid);
+		$res=$log->getPos($vid);
+		return json($res);
 	}
 
 	public function searchHistoryPath(){
 		$log=new Log;
 		$douglas=new Douglas;
 		$vid=input("param.vid");
-		$begindate=input("param.begindate");
-		$begintime=input("param.begintime");
-		$enddate=input("param.enddate");
-		$endtime=input("param.endtime");	
-
-		$start=$begindate.' '.$begintime;
-		$end=$enddate.' '.$endtime;
+		$start=input("param.sdatetime");
+		$end=input("param.edatetime");	
 
 		$res=$log->getPos($vid,$start,$end);
 		if(empty($res))
 			return;
 		$data=$douglas->compress($res,5);
-		echo json_encode($data);
+		return json($data);
 	}
 
     public function searchMeditation(){
@@ -112,5 +123,26 @@ class Data extends Controller
 		if(empty($res))
 			return;
 		echo json_encode($res);
+    }
+
+    public function insert(){
+    	$log=new Log;
+    	$vid=input("param.vid");
+    	$lat=input("param.lat");
+    	$lon=input("param.lon");
+    	$acc=input("param.acc");
+    	$dir=input("param.dir");
+    	$bpm=input("param.bpm");	
+    	$attention=input("param.attention");
+    	$meditation=input("param.meditation");
+    	$speed=input("param.speed");
+    	$battery=input("param.battery");
+    	$res=$log->insert($vid,$lat,$lon,$acc,$dir,$bpm,$attention,$meditation,$speed,$battery);
+    	$json=[];
+    	if($res==1)
+    		$json['success']=1;
+		else
+			$json['success']=0;
+		return json($json);
     }
 }

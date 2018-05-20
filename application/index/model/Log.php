@@ -98,16 +98,13 @@ class Log extends Model
 	}
 
 	public function getPos1($vid){
-		$pos=array();
 		$res=Db::table('log')
 			->where('vid',$vid)
 			->whereTime('uploaddate','-1 minutes')
 			->order('uploaddate desc')
 			->limit(1)
-			->select();
-		$pos['lon']=$res[0]['lon'];
-		$pos['lat']=$res[0]['lat'];
-		return $pos;
+			->find();
+		return $res;
 	}
 
 	public function getPos2($vid,$begintime,$endtime){
@@ -145,5 +142,23 @@ class Log extends Model
                     return $this->getMeditation2($args[0],$args[1],$args[2]);
             }
         }
+    }
+
+    public function insert($vid,$lat,$lon,$acc,$dir,$bpm,$attention,$meditation,$speed,$battery){
+    	$data=[
+			"vid"=>md5($vid),
+			"lat"=>$lat,
+			"lon"=>$lon,
+			"acc"=>$acc,
+			"dir"=>$dir,
+			"bpm"=>$bpm,
+			"Attention"=>$attention,
+			"Meditation"=>$meditation,
+			"speed"=>$speed,
+			"battery"=>$battery,
+			"uploaddate"=>date("Y-m-d H:i:s")
+		];
+		if(Db::name("log")->insert($data))
+			return 1;
     }
 }

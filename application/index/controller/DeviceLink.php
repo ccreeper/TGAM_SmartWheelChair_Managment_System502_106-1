@@ -20,11 +20,12 @@ class DeviceLink extends Controller
 	}
 
 	public function add(){
+
 		if(request()->isPost()){
-            $user=unserialize(Session::get("userinfo"));
+        	$user=unserialize(Session::get("userinfo"));
             $vid=input('param.vid');
 			$dev=new Device;
-			$uid=$user->getUid();
+			$uid=$user["uid"];
 			$res=$dev->add($uid,$vid);
 			if($res==1)
 				$this->error("该设备已关联");
@@ -35,6 +36,19 @@ class DeviceLink extends Controller
 			else
 				$this->error("添加关联失败");
 		}
+	}
+
+	public function addbytwocode(){
+		$uid=input('param.uid');
+		$vid=input('param.vid');
+		$dev=new Device;
+		$res=$dev->add($uid,$vid);
+		$json=[];
+		if($res==3)
+			$json['success']=1;
+		else
+			$json['success']=0;
+		return json($json);
 	}
 
 	public function delete($vid){
@@ -55,5 +69,13 @@ class DeviceLink extends Controller
 		//uid替换
 		$json["res"]=$res;
 		echo json_encode($json);
+	}
+
+	public function getTrack(){
+		$uid=input("param.uid");
+		$dev=new Device;
+		$res=$dev->getTrack($uid);
+		$json["vid"]=$res;
+		return json($json);
 	}
 }

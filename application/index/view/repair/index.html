@@ -37,11 +37,10 @@
             <h4 class="page-title">报修记录</h4>
             <div class="block-area" id="button-tags">
                 <button class="btn" data-toggle="modal" href="#modalDefault">报修</button>
-                
             </div>
             <div class="block-area">
                 <input id="search_tid" class="input-sm col-md-4 message-search" type="text" placeholder="请输入要查询的报修单号..." style="background-image:none ;">
-                <button class="btn" style="margin-left: 10px;" onclick="searchRepair()">查询</button>
+                <button id="search" class="btn" style="margin-left: 10px;" onclick="searchRepair()">查询</button>
             </div>
             <!-- Table Striped -->
             <div class="block-area" id="tableStriped">
@@ -96,9 +95,13 @@
                         <div class="form-group">
                             <label for="inputUser" class="col-md-2 control-label">设备号:  </label>
                             <div  class="col-md-6">
-                              <input type="text" class="form-control" id="inputUser" placeholder="设备号" name="vid"> 
-                          </div>
-                      </div>
+                                <select class="select" name="vid">
+                                    {volist name="links" id="vo" key="key"}
+                                    <option value={$vo.vid}>{$vo.vid}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
 
                       <div class="form-group">
                         <label for="inputContent" class="col-md-2 control-label">原因:  </label>
@@ -116,17 +119,17 @@
         </div>
     </div>
 </div>
-    <!-- Modal Default -->  
-    <div class="modal fade" id="modalPic" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">上传设备照片</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" action="{:url('addPic')}" method="post" enctype="multipart/form-data">
-                    
+<!-- Modal Default -->  
+<div class="modal fade" id="modalPic" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">上传设备照片</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="{:url('addPic')}" method="post" enctype="multipart/form-data">
+
                     <input type="hidden" name="tid" id="modal-tid">
                     <div class="form-group">
                         <label class="col-md-2 control-label">上传照片:  </label>
@@ -148,6 +151,14 @@
 </div>
 {include file="public:footer"/}
 <script type="text/javascript">
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+
+        if(e && e.keyCode==13){ 
+            $("#search").click();
+        }
+
+    }
     function sendtid(tid){
         $("#modal-tid").val(tid);
     }
@@ -169,22 +180,22 @@
                 success:function(result){
                     $.each(result,function(i,item){
                         $("#repair_table").append(
-                                        "<tbody id='search_result' style='border:none;'>"+
-                                        "<tr>"+
-                                        "<td>"+item.tid+"</td>"+
-                                        "<td>"+item.vid+"</td>"+
-                                        "<td>"+item.vname+"</td>"+
-                                        "<td>"+item.content+"</td>"+
-                                        "<td>"+item.uploadtime+"</td>"+
-                                        "<td>"+
-                                            '<div class="btn-group m-b-10">'+
-                                                '<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="modal" href="#modalPic" onclick="sendtid('+item.tid+')">'+
-                                                    "上传照片"+
-                                                "</button>"+
-                                            "</div>"+
-                                        "</td>"+
-                                        "</tr>"+
-                                        "</tbody>");
+                            "<tbody id='search_result' style='border:none;'>"+
+                            "<tr>"+
+                            "<td>"+item.tid+"</td>"+
+                            "<td>"+item.vid+"</td>"+
+                            "<td>"+item.vname+"</td>"+
+                            "<td>"+item.content+"</td>"+
+                            "<td>"+item.uploadtime+"</td>"+
+                            "<td>"+
+                            '<div class="btn-group m-b-10">'+
+                            '<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="modal" href="#modalPic" onclick="sendtid('+item.tid+')">'+
+                            "上传照片"+
+                            "</button>"+
+                            "</div>"+
+                            "</td>"+
+                            "</tr>"+
+                            "</tbody>");
                     })
                 }
             });

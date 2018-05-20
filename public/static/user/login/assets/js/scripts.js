@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */    
-    $.backstretch("/wheelchair/public/static/assets/img/LoginCGI/backgrounds/1.jpg");
+    $.backstretch("/TGAM_SmartWheelChair_Managment_System502_106-1/public/static/assets/img/LoginCGI/backgrounds/1.jpg");
     
     $('#top-navbar-1').on('shown.bs.collapse', function(){
     	$.backstretch("resize");

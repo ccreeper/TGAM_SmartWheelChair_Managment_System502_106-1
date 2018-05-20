@@ -52,6 +52,7 @@
                     <table class="tile table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>编号</th>
                                 <th>设备号</th>
                                 <th>设备名称</th>
                                 <th>出厂日期</th>
@@ -63,6 +64,7 @@
                         <tbody>
                             {volist name="devices" id="dev"}
                             <tr class="tr{$dev.id} <?php if($dev['track']==1) echo ' selected'; ?>">
+                                <td>{$i}</td>
                                 <td>{$dev.vid}</td>
                                 <td>{$dev.vname}</td>
                                 <td>{$dev.pdate}</td>
