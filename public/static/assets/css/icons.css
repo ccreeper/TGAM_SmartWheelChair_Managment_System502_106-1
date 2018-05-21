@@ -38,7 +38,7 @@
 .sa-side-page { background-image: url(../img/icon/pages.png); }
 .sa-side-chart { background-image: url(../img/icon/chart.png); }
 .sa-side-photos { background-image: url(../img/icon/photos.png); }
-
+.sa-side-repair{background-image: url(../img/icon/ui.png)}
 /* Top Menu */
 [class*="sa-top-"] {
     width: 40px;
@@ -131,7 +131,8 @@ only screen and (                min-resolution: 1.25dppx) {
     .sa-side-page { background-image: url(../img/icon/pages@2x.png); background-size: 25px 21px; }
     .sa-side-chart { background-image: url(../img/icon/chart@2x.png); background-size: 24px 19px; }
     .sa-side-photos { background-image: url(../img/icon/photos@2x.png); background-size: 23px 19px; }
-    
+    .sa-side-repair{background-image: url(../img/icon/ui@2x.png); background-size: 25px 21px;}
+
     /* Top Menu */
     .sa-top-message { background-image: url(../img/icon/message@2x.png); background-size: 25px 17px; }
     .sa-top-updates { background-image: url(../img/icon/updates@2x.png); background-size: 25px 25px; }

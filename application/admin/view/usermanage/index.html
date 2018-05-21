@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">    <link href="__STATIC__/assets/css/animate.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet">
+</head>
+<body id="skin-blur-violate">
+
+{include file="public:header"/}
+
+<div class="clearfix"></div>
+
+<section id="main" class="p-relative" role="main">
+
+    {include file="public:sidebar"/}
+
+    <!-- Content -->
+    <section id="content" class="container">
+
+        <h4 class="page-title">用户管理</h4>
+
+        <!-- Table Striped -->
+        <div class="block-area" id="tableStriped">
+
+            <div class="tile" style="margin-bottom: 2px">
+                <h2 class="tile-title">已注册的用户列表</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="tile table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>用户名</th>
+                        <th>头像</th>
+                        <th>电子邮件地址</th>
+                        <th>激活状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.uid}</td>
+                        <td>{$vo.username}</td>
+                        <td><img src="__STATIC__/userpic/{$vo.pic}" width="10%"></td>
+                        <td>{$vo.email}</td>
+                        <td>
+                            {eq name="$vo.status" value="0"}
+                            <span class="label label-danger" style="font-size: 120%">未激活</span>
+                            {else/}
+                            <span class="label label-success" style="font-size: 120%">激活</span>
+                            {/eq}
+                        </td>
+                        <td>
+                            <div class="btn-group m-b-10">
+                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    操作
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" onclick="del({$vo.uid})">删除</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="modify({$vo.uid})">修改</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <br/><br/>
+</section>
+<!-- Modal Default -->
+<div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">修改用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="user-form" class="form-horizontal" onsubmit="return false;">
+                    <input type="hidden" id="form-uid" name="uid" value="">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">邮箱地址</label>
+                        <div  class="col-md-6">
+                            <input type="email" class="form-control" id="form-email" placeholder="邮件地址" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">昵称</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-username" placeholder="昵称" name="username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">头像</label>
+                        <img id="form-userpic" src="__STATIC__/userpic/default.jpg}" class="thumbnail small" style="width: 10%">
+                        <label class="col-md-2 control-label">修改头像</label>
+                        <input type="file" name="userpic" class="btn btn-sm m-t-10">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">激活状态</label>
+                        <div class="switch" id="form-sw">
+                            <input class="form-control" type="checkbox" name="status">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commit()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+<script src="https://cdn.bootcss.com/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript">
+    function modify(uid)
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('getInfo')}",
+            data:"uid="+uid,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                $("#form-uid").val(uid);
+                $("#form-email").val(data.email);
+                $("#form-username").val(data.username);
+                $("#form-userpic").attr("src","__STATIC__/userpic/"+data.pic);
+                $("#form-sw input").bootstrapSwitch({
+                    onText:"Active",
+                    offText:"NotAct",
+                    onColor:"success",
+                    offColor:"danger",
+                    size:"small"
+                });
+                if(parseInt(data.status)===0)
+                {
+                    $("#form-sw input").bootstrapSwitch('state',false);
+                }
+                else
+                {
+                    $("#form-sw input").bootstrapSwitch('state',true);
+                }
+                $("#modify").modal('show');
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("user-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('changeUserInfo')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    alert("系统错误！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function del(uid)
+    {
+        if(confirm('确认删除？'))
+        {
+            $.ajax({
+                type:"post",
+                url:"{:url('userDel')}",
+                data:"uid="+uid,
+                success: function (result)
+                {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    var data=$.parseJSON(result);
+                    var status=parseInt(data.status);
+                    if(status === 1)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert("系统错误！");
+                    }
+                },
+                error : function()
+                {
+                    alert("网络异常！");
+                }
+            });
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+

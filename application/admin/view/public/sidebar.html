@@ -1,0 +1,85 @@
+            <!-- Sidebar -->
+            <aside id="sidebar">
+                
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img id="sidebar-userpic" class="profile-pic animated" src="__STATIC__/userpic/default.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                            {neq name=":request()->controller()" value="Setting"}
+                                <li><a href="{:url('setting/index')}">设置</a> <i class="icon left"><i class="fa fa-gears"></i></i></li>
+                            {/neq}
+                        </ul>
+                        <h4 id="sidebar-username" class="m-0">{$adminname}</h4>
+                    </div>
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+                    
+                    <!-- Feeds -->
+                    <div class="s-widget m-b-25">                        
+                        <div class="s-widget-body">
+                            <div id="news-feed"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu">
+                    <li class="<?php if(request()->controller()=='Index') echo 'active'; ?>">
+                        <a class="sa-side-home" href="{:url('index/index')}">
+                            <span class="menu-item">主页</span>
+                        </a>
+                    </li>
+                    <li class="<?php if(request()->controller()=='Usermanage') echo 'active'; ?>">
+                        <a class="sa-side-widget" href="{:url('Usermanage/index')}">
+                            <span class="menu-item">用户管理</span>
+                        </a>
+                    </li>
+                    <li class="<?php if(request()->controller()=='Devicemanage') echo 'active'; ?>">
+                        <a class="sa-side-folder" href="{:url('Devicemanage/index')}">
+                            <span class="menu-item">设备管理</span>
+                        </a>
+                    </li>
+                    <li class="<?php if(request()->controller()=='Devicelink') echo 'active'; ?>">
+                        <a class="sa-side-page" href="{:url('Devicelink/index')}">
+                            <span class="menu-item">设备关联</span>
+                        </a>
+                    </li>
+                    <li class="<?php if(request()->controller()=='Repairmanage') echo 'active'; ?>">
+                        <a class="sa-side-repair" href="#">
+                            <span class="menu-item">报修管理</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="sa-side-ui" onclick="logout()">
+                            <span class="menu-item">注销</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <script>
+                function logout()
+                {
+                    $.ajax({
+                        type:"post",
+                        url:"{:url('admin/index/logout')}",
+                        data:null,
+                        processData:false,
+                        contentType:false,
+                        success: function (result)
+                        {
+                            window.location.href="{:url('admin/login/index')}";
+                        },
+                        error : function()
+                        {
+                            alert("网络异常！");
+                        }
+                    })
+                }
+            </script>

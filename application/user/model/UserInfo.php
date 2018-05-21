@@ -133,6 +133,7 @@ class UserInfo
         $arr["username"]=$this->getUsername();
         $arr["email"]=$this->getEmail();
         $arr["pic"]=$this->getPic();
+        $arr["status"]=$this->getStatus();
         return $arr;
     }
 }

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet">
+</head>
+<body id="skin-blur-violate">
+
+{include file="public:header"/}
+
+<div class="clearfix"></div>
+
+<section id="main" class="p-relative" role="main">
+
+    {include file="public:sidebar"/}
+
+    <!-- Content -->
+    <section id="content" class="container">
+
+        <h4 class="page-title">设备关联管理</h4>
+
+        <!-- Table Striped -->
+        <div class="block-area" id="tableStriped">
+            <div class="tile" style="margin-bottom: 2px">
+                <h2 class="tile-title">设备关联表</h2>
+                <div class="tile-config dropdown">
+                    <a data-toggle="dropdown" href="" class="tooltips tile-menu" title="Options"></a>
+                    <ul class="dropdown-menu pull-right text-right">
+                        <li><a data-toggle="modal" href="#add">添加关联</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="tile table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>用户号</th>
+                        <th>设备号</th>
+                        <th>绑定日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.uid}</td>
+                        <td>{$vo.vid}</td>
+                        <td>{$vo.linkdate}</td>
+                        <td>
+                            <div class="btn-group m-b-10">
+                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    操作
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" onclick="del({$vo.id})">删除</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="modify({$vo.id})">修改</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <br/><br/>
+</section>
+<!-- Modal Default -->
+<div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">修改绑定信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="link-form" class="form-horizontal" onsubmit="return false;">
+                    <input type="hidden" id="form-id" name="id" value="">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">用户号</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-uid" placeholder="用户号" name="uid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">设备号</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-vid" placeholder="设备号" name="vid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">绑定日期</label>
+                        <div  class="col-md-6">
+                            <input type="date" class="form-control" id="form-linkdate" placeholder="绑定日期" name="linkdate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commit()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新增绑定信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="add-form" class="form-horizontal" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">用户号</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-add-uid" placeholder="用户号" name="uid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">设备号</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-add-vid" placeholder="设备号" name="vid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">绑定日期</label>
+                        <div  class="col-md-6">
+                            <input type="date" class="form-control" id="form-add-linkdate" placeholder="绑定日期" name="linkdate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commitNew()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+<script src="https://cdn.bootcss.com/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript">
+    function modify(id)
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('getInfo')}",
+            data:"id="+id,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                $("#form-id").val(id);
+                $("#form-uid").val(data.uid);
+                $("#form-vid").val(data.vid);
+                $("#form-linkdate").val(data.linkdate);
+                $("#modify").modal('show');
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function commit()
+    {
+        $("#form-vid").css("border","0px");
+        $("#form-uid").css("border","0px");
+        var formdata=new FormData(document.getElementById("link-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('changeLinkInfo')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else if(status === 2)
+                {
+                    $("#form-vid").css("border","2px solid red");
+                    $("#form-vid").val("此设备已经被绑定");
+                }
+                else if(status === 3)
+                {
+                    $("#form-uid").css("border","2px solid red");
+                    $("#form-uid").val("用户不存在！");
+                }
+                else
+                {
+                    alert("系统错误！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function commitNew()
+    {
+        $("#form-add-vid").css("border","0px");
+        $("#form-add-uid").css("border","0px");
+        var formdata=new FormData(document.getElementById("add-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('addLinkInfo')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else if(status === 2)
+                {
+                    $("#form-add-vid").css("border","2px solid red");
+                    $("#form-add-vid").val("此设备已经被绑定");
+                }
+                else if(status === 3)
+                {
+                    $("#form-add-uid").css("border","2px solid red");
+                    $("#form-add-uid").val("用户不存在！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function del(id)
+    {
+        if(confirm('确认删除？'))
+        {
+            $.ajax({
+                type:"post",
+                url:"{:url('linkDel')}",
+                data:"id="+id,
+                success: function (result)
+                {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    var data=$.parseJSON(result);
+                    var status=parseInt(data.status);
+                    if(status === 1)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert("系统错误！");
+                    }
+                },
+                error : function()
+                {
+                    alert("网络异常！");
+                }
+            });
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+

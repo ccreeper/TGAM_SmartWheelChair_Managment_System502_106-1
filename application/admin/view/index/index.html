@@ -1,13 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
 
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>TGAM轮椅管理系统</title>
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/animate.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet">
 </head>
+<body id="skin-blur-violate">
 
-<body>
-<h1>This is amdin page!!</h1>
+{include file="public:header"/}
 
+<div class="clearfix"></div>
+
+<section id="main" class="p-relative" role="main">
+
+    {include file="public:sidebar"/}
+
+    <!-- Content -->
+    <section id="content" class="container">
+
+        <h4 class="page-header">&nbsp;&nbsp;欢迎！管理员：{$adminname}</h4>
+
+        <!-- Shortcuts -->
+
+
+        <!-- Quick Stats -->
+
+
+    </section>
+</section>
+
+<!-- Javascript Libraries -->
+<!-- jQuery -->
+{include file="public:footer"/}
+<script type="text/javascript">
+
+</script>
 </body>
-
 </html>

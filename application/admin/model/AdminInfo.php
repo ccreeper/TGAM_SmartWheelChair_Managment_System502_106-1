@@ -59,7 +59,7 @@ class AdminInfo
     public function Update($key,$value)
     {
         $data=[
-            'uid'=>$this->uid,
+            'uid'=>$this->adminid,
             $key =>$value
         ];
         $res=Db::name("users")->update($data);

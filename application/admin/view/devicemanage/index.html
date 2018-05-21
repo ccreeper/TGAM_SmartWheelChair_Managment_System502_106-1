@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet">
+</head>
+<body id="skin-blur-violate">
+
+{include file="public:header"/}
+
+<div class="clearfix"></div>
+
+<section id="main" class="p-relative" role="main">
+
+    {include file="public:sidebar"/}
+
+    <!-- Content -->
+    <section id="content" class="container">
+
+        <h4 class="page-title">设备管理</h4>
+
+        <!-- Table Striped -->
+        <div class="block-area" id="tableStriped">
+            <div class="tile" style="margin-bottom: 2px">
+                <h2 class="tile-title">设备列表</h2>
+                <div class="tile-config dropdown">
+                    <a data-toggle="dropdown" href="" class="tooltips tile-menu" title="Options"></a>
+                    <ul class="dropdown-menu pull-right text-right">
+                        <li><a data-toggle="modal" href="#add">添加设备</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="tile table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>设备号</th>
+                        <th>设备名</th>
+                        <th>出厂日期</th>
+                        <th>激活日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.vid}</td>
+                        <td>{$vo.vname}</td>
+                        <td>{$vo.pdate}</td>
+                        <td>{$vo.rdate}</td>
+                        <td>
+                            <div class="btn-group m-b-10">
+                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    操作
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" onclick="del('{$vo.vid}')">删除</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="modify('{$vo.vid}')">修改</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <br/><br/>
+</section>
+<!-- Modal Default -->
+<div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">修改设备信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="device-form" class="form-horizontal" onsubmit="return false;">
+                    <input type="hidden" id="form-vid" name="vid" value="">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">设备名</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-vname" placeholder="设备名" name="vname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">出厂日期</label>
+                        <div  class="col-md-6">
+                            <input type="date" class="form-control" id="form-pdate" placeholder="出厂日期" name="pdate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">激活日期</label>
+                        <div  class="col-md-6">
+                            <input type="date" class="form-control" id="form-rdate" placeholder="激活日期" name="rdate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commit()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新增设备</h4>
+            </div>
+            <div class="modal-body">
+                <form id="add-form" class="form-horizontal" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">设备ID</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-add-vid" placeholder="设备ID" name="vid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">设备名</label>
+                        <div  class="col-md-6">
+                            <input type="text" class="form-control" id="form-add-vname" placeholder="设备名" name="vname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">出厂日期</label>
+                        <div  class="col-md-6">
+                            <input type="date" class="form-control" id="form-add-pdate" placeholder="出厂日期" name="pdate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commitNew()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+<script src="https://cdn.bootcss.com/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript">
+    function modify(vid)
+    {
+        $.ajax({
+            type:"post",
+            url:"{:url('getInfo')}",
+            data:"vid="+vid,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                $("#form-vid").val(vid);
+                $("#form-vname").val(data.vname);
+                $("#form-pdate").val(data.pdate);
+                $("#form-rdate").val(data.pdate);
+                $("#modify").modal('show');
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("device-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('changeDeviceInfo')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    alert("系统错误！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function commitNew()
+    {
+        var formdata=new FormData(document.getElementById("add-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('addDeviveInfo')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    alert("系统错误！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function del(vid)
+    {
+        if(confirm('确认删除？'))
+        {
+            $.ajax({
+                type:"post",
+                url:"{:url('deviceDel')}",
+                data:"vid="+vid,
+                success: function (result)
+                {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    var data=$.parseJSON(result);
+                    var status=parseInt(data.status);
+                    if(status === 1)
+                    {
+                        location.reload();
+                    }
+                    else if(status === 2)
+                    {
+                        alert("该设备还有用户绑定不可被删除！");
+                    }
+                    else
+                    {
+                        alert("系统错误！");
+                    }
+                },
+                error : function()
+                {
+                    alert("网络异常！");
+                }
+            });
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+
