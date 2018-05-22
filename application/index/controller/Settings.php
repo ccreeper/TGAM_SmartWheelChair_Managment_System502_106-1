@@ -41,17 +41,11 @@ class Settings extends Controller
         {
             $res=Db::name('users')->where("uid",$uid)->find();
             $userInfo=new UserInfo($res);
-            if($userInfo->renewToken())
-            {
-                $newMailtmp=new MailTemplate($userInfo->getUsername(),$userInfo->getToken(),$nemail);
-                $mail=new Mail($userInfo->getEmail(),"邮箱地址变更",$newMailtmp->toChangeE());
-                $mail->sendit();
-                $report["status"]="1";
-            }
-            else
-            {
-                $report["status"]="2";
-            }
+            $userInfo->renewToken();
+            $newMailtmp=new MailTemplate($userInfo->getUsername(),$userInfo->getToken(),$nemail);
+            $mail=new Mail($userInfo->getEmail(),"邮箱地址变更",$newMailtmp->toChangeE());
+            $mail->sendit();
+            $report["status"]="1";
         }
         echo json_encode($report);
     }

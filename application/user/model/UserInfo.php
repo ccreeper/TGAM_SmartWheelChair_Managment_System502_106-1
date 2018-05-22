@@ -86,14 +86,7 @@ class UserInfo
     {
         $newtoken=md5(date("Ymd").$this->email);
         $this->token=$newtoken;
-        if(!$this->Update('token',$newtoken))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        $this->Update('token',$newtoken);
     }
     public function refresh()
     {
