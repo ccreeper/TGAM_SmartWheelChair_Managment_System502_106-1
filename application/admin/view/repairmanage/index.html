@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>Super Admin Responsive Template</title>
+
+    <!-- CSS -->
+    <link href="__STATIC__/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/form.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/calendar.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/media-player.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/icons.css" rel="stylesheet">
+    <link href="__STATIC__/assets/css/generics.css" rel="stylesheet">
+</head>
+<body id="skin-blur-violate">
+
+{include file="public:header"/}
+
+<div class="clearfix"></div>
+
+<section id="main" class="p-relative" role="main">
+
+    {include file="public:sidebar"/}
+
+    <!-- Content -->
+    <section id="content" class="container">
+
+        <h4 class="page-title">工单管理</h4>
+
+        <!-- Table Striped -->
+        <div class="block-area" id="tableStriped">
+
+            <div class="tile" style="margin-bottom: 2px">
+                <h2 class="tile-title">工单列表</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="tile table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>用户号</th>
+                        <th>设备号</th>
+                        <th>内容</th>
+                        <th>发布日期</th>
+                        <th>处理状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.tid}</td>
+                        <td>{$vo.uid}</td>
+                        <td>{$vo.vid}</td>
+                        <td>{$vo.content}</td>
+                        <td>{$vo.uploadtime}</td>
+                        <td>
+                            {eq name="$vo.status" value="0"}
+                            <span class="label label-warning" style="font-size: 120%">待处理</span>
+                            {else/}
+                            <span class="label label-success" style="font-size: 120%">结单</span>
+                            {/eq}
+                        </td>
+                        <td>
+                            <div class="btn-group m-b-10">
+                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    操作
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" onclick="del({$vo.tid})">删除</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" onclick="deal({$vo.tid})">处理</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <br/><br/>
+</section>
+<!-- Modal Default -->
+<div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">处理工单</h4>
+            </div>
+            <div class="modal-body">
+                <form id="content-form" class="form-horizontal" onsubmit="return false;">
+                    <input type="hidden" id="form-tid" name="tid" value="">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">内容</label>
+                        <div  class="col-md-6">
+                            <textarea id="form-content" class="form-control" rows="5" name="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm" onclick="commit()">提交</button>
+                        <button type="reset" class="btn btn-sm">清空</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+<script type="text/javascript">
+    function deal(tid)
+    {
+       $("#form-tid").val(tid);
+       $("#modify").modal('show');
+    }
+    function commit()
+    {
+        var formdata=new FormData(document.getElementById("content-form"));
+        $.ajax({
+            type:"post",
+            url:"{:url('sendUser')}",
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success: function (result)
+            {
+                console.log(result);//打印服务端返回的数据(调试用)
+                var data=$.parseJSON(result);
+                var status=parseInt(data.status);
+                if(status === 1)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    alert("邮件发送失败！");
+                }
+            },
+            error : function()
+            {
+                alert("网络异常！");
+            }
+        });
+    }
+    function del(tid)
+    {
+        if(confirm('确认删除？'))
+        {
+            $.ajax({
+                type:"post",
+                url:"{:url('repairDel')}",
+                data:"tid="+tid,
+                success: function (result)
+                {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    var data=$.parseJSON(result);
+                    var status=parseInt(data.status);
+                    if(status === 1)
+                    {
+                        location.reload();
+                    }
+                    else if(status === 2)
+                    {
+                        alert("不可删除未处理的工单");
+                    }
+                    else
+                    {
+                        alert("系统错误！");
+                    }
+                },
+                error : function()
+                {
+                    alert("网络异常！");
+                }
+            });
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
+

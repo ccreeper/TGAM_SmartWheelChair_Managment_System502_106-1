@@ -35,5 +35,9 @@ class MailTemplate
         $content='你好！'.$this->username.'您发出了邮箱变更请求，若不是您的操作请及时更换密码，点击以下链接更换您的账号密码：http://140.143.140.195/wheelchair/public/index.php/user/login/emailchange?token='.$this->usertoken.'&email='.$this->otherPapram.' 本链接当日有效!';
         return $content;
     }
-
+    public function toTickit()
+    {
+        $content='你好！'.$this->username.':\r\n您的工单:'.$this->usertoken.'的处理回复如下\r\n'.$this->otherPapram.'\r\n若您还有其他的疑问，请再次提交一个报修工单，谢谢！';
+        return $content;
+    }
 }
