@@ -61,7 +61,7 @@ class Index extends Controller
 		$random_speed=rand(10,30);
 		$random_battery=rand(10,100);
 		$data=[
-			"vid"=>$vid,
+			"vid"=>$vid, 
 			"lat"=>$random_lat,
 			"lon"=>$random_lon,
 			"acc"=>2,

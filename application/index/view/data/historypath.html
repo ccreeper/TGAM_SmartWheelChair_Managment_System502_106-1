@@ -58,7 +58,7 @@
                         <label>选择设备号：</label>
                         <select id="vid_select" class="select">
                             {volist name="links" id="vo" key="key"}
-                            <option value={$key-1}>{$vo.vid}</option>
+                            <option value={$key-1}>{$vo.vname}</option>
                             {/volist}
                         </select>
                     </div>
@@ -110,10 +110,13 @@
                 var enddate=$("#enddate").val();
                 var endtime=$("#endtime").val();
                 var end=enddate+" "+endtime;
+
+                var vname=$("#vid_select").find('option:selected').text();
+                
                 $.ajax({
                     type:"get",
                     url:"{:url('searchHistoryPath')}",
-                    data:{vid:$("#vid_select").find('option:selected').text(),sdatetime:start,edatetime:end},
+                    data:{vname:vname,sdatetime:start,edatetime:end},
                     dataType:"json",
                     success:function(result){
                         var start_point=new BMap.Point(result[0].lon,result[0].lat);

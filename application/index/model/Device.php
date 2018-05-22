@@ -7,7 +7,7 @@ class Device extends Model
 {
 	public function add($uid,$vid){
 		$num=Db::name("link")
-			->where('vid',$vid)
+			->where('vid',md5($vid))
 			->count();
 		$info=Db::name("device")
 			->where('vid',md5($vid))
@@ -23,7 +23,10 @@ class Device extends Model
 			"linkdate"=>date("Y-m-d")
 		];
 		if(Db::name("link")->insert($data))
+		{
+			self::activation($vid);
 			return 3;
+		}
 		return 4;
 	}
 
@@ -61,5 +64,25 @@ class Device extends Model
 			->field('vid')
 			->find();
 		return $res['vid'];
+	}
+
+
+	public function getVid($vname){
+		$res=Db::name("device")
+			->where('vname',$vname)
+			->find();
+		return $res;
+	}
+
+	public function activation($vid){
+		$res=Db::name("device")
+			->where('vid',$vid)
+			->field('rdate')
+			->find();
+		if(!$res){
+			Db::name("device")
+			->where('vid',md5($vid))
+			->update(['rdate'=>date("Y-m-d")]);
+		}
 	}
 }

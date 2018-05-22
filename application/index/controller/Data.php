@@ -65,9 +65,11 @@ class Data extends Controller
 	public function searchHistoryPath(){
 		$log=new Log;
 		$douglas=new Douglas;
-		$vid=input("param.vid");
+		$dev=new Device;
+		$vname=input("param.vname");
 		$start=input("param.sdatetime");
 		$end=input("param.edatetime");	
+		$vid=$dev->getVid($vname)['vid'];
 
 		$res=$log->getPos($vid,$start,$end);
 		if(empty($res))
@@ -82,14 +84,11 @@ class Data extends Controller
     		'excitation'=>0,
     		'relax'=>0
     	];
-    	$vid=input("param.vid");
-		$begindate=input("param.begindate");
-		$begintime=input("param.begintime");
-		$enddate=input("param.enddate");
-		$endtime=input("param.endtime");	
-
-		$start=$begindate.' '.$begintime;
-		$end=$enddate.' '.$endtime;
+    	$vname=input("param.vname");
+		$start=input("param.sdatetime");
+		$end=input("param.edatetime");	
+		$dev=new Device;
+		$vid=$dev->getVid($vname)['vid'];
 
 		$log=new Log;
 		$res=$log->getMeditation($vid,$start,$end);
@@ -110,14 +109,11 @@ class Data extends Controller
 
     public function searchBpmAndSpeed(){
     	$log=new Log;
-    	$vid=input("param.vid");
-		$begindate=input("param.begindate");
-		$begintime=input("param.begintime");
-		$enddate=input("param.enddate");
-		$endtime=input("param.endtime");	
-
-		$start=$begindate.' '.$begintime;
-		$end=$enddate.' '.$endtime;
+    	$dev=new Device;
+    	$vname=input("param.vname");
+    	$vid=$dev->getVid($vname)['vid'];
+		$start=input("param.sdatetime");
+		$end=input("param.edatetime");	
 
 		$res=$log->getLog($vid,$start,$end);
 		if(empty($res))
@@ -125,24 +121,5 @@ class Data extends Controller
 		echo json_encode($res);
     }
 
-    public function insert(){
-    	$log=new Log;
-    	$vid=input("param.vid");
-    	$lat=input("param.lat");
-    	$lon=input("param.lon");
-    	$acc=input("param.acc");
-    	$dir=input("param.dir");
-    	$bpm=input("param.bpm");	
-    	$attention=input("param.attention");
-    	$meditation=input("param.meditation");
-    	$speed=input("param.speed");
-    	$battery=input("param.battery");
-    	$res=$log->insert($vid,$lat,$lon,$acc,$dir,$bpm,$attention,$meditation,$speed,$battery);
-    	$json=[];
-    	if($res==1)
-    		$json['success']=1;
-		else
-			$json['success']=0;
-		return json($json);
-    }
+
 }
