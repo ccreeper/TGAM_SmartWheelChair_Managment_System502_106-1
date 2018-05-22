@@ -53,7 +53,7 @@
                     <label>选择设备号：</label>
                     <select id="vid_select" class="select" onchange="getPic()">
                         {volist name="links" id="vo" key="key"}
-                        <option value={$key-1}>{$vo.vid}</option>
+                        <option value={$key-1}>{$vo.vname}</option>
                         {/volist}
                     </select>
                 </div>
@@ -133,12 +133,13 @@
         if(!confirm('确认清空该设备的所有快照？'))
             return ;  
 
-        var vid=$("#vid_select").find('option:selected').text();
+        var vname=$("#vid_select").find('option:selected').text();
         var id=$("#vid_select").val();
+
         $.ajax({
             type:"get",
             url:"{:url('clear')}",
-            data:{vid:vid},
+            data:{vname:vname},
             dataType:"json",
             success:function(result){
                 $('#picContainer'+id).empty();

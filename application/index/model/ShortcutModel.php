@@ -14,7 +14,9 @@ class ShortcutModel extends Model
 
 	public function getLink($uid){
 		$link=Db::table("link")
+			->alias('l')
 			->where('uid',$uid)
+			->join('device d','l.vid=d.vid')
 			->select();
 		return $link;
 	}
@@ -47,4 +49,5 @@ class ShortcutModel extends Model
 			->delete();
 		return $res;
 	}
+
 }

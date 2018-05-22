@@ -58,7 +58,7 @@
                         <label>选择设备号：</label>
                         <select id="vid_select" class="select">
                             {volist name="links" id="vo" key="key"}
-                            <option value={$key-1}>{$vo.vid}</option>
+                            <option value={$key-1}>{$vo.vname}</option>
                             {/volist}
                         </select>
                     </div>
@@ -198,6 +198,15 @@
         });
 
         function search(){
+
+            var vname=$("#vid_select").find('option:selected').text();
+            var begindate=$("#begindate").val();
+            var begintime=$("#begintime").val();
+            var start=begindate+" "+begintime;
+            var enddate=$("#enddate").val();
+            var endtime=$("#endtime").val();
+            var end=enddate+" "+endtime;
+
             if(!$("#begindate").val() || !$("#begintime").val() || !$("#enddate").val() || !$("#endtime").val())
             {
                 alert("请输入完整的时间段");
@@ -207,7 +216,7 @@
             $.ajax({
                 type:"get",
                 url:"{:url('searchMeditation')}",
-                data:{vid:$("#vid_select").find('option:selected').text(),begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                data:{vname:vname,sdatetime:start,edatetime:end},
                 dataType:"json",
                 success:function(result){
                     checkView();
@@ -224,7 +233,7 @@
             $.ajax({
                 type:"get",
                 url:"{:url('searchBpmAndSpeed')}",
-                data:{vid:$("#vid_select").find('option:selected').text(),begindate:$("#begindate").val(),begintime:$("#begintime").val(),enddate:$("#enddate").val(),endtime:$("#endtime").val()},
+                data:{vname:vname,sdatetime:start,edatetime:end},
                 dataType:"json",
                 success:function(result){
                     checkView();
@@ -236,7 +245,10 @@
                     }); 
                     bpmChart.update();
                     speedChart.update();
-                }
+                },
+                error: function (xml,status,thrown) {
+                    alert("数据获取失败\n可能的原因：\n    1.查询时间段不符合规范\n    2.查询的数据不存在");
+                }  
             });
 
         }

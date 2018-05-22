@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 use app\index\model\ShortcutModel;
+use app\index\model\Device;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -42,7 +43,9 @@ class Shortcut extends Controller
 
 	public function clear(){
 		$shortcut=new ShortcutModel;
-		$vid=input("param.vid");
+		$vname=input("param.vname");
+		$dev=new Device;
+		$vid=$dev->getVid($vname)['vid'];
 		$pics=$shortcut->getPicByVid($vid);
 		if($res=$shortcut->clear($vid)){
 			foreach ($pics as $key => $value) {

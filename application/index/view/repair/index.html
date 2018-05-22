@@ -93,11 +93,11 @@
                 <div class="modal-body">
                     <form class="form-horizontal" action="{:url('add')}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="inputUser" class="col-md-2 control-label">设备号:  </label>
+                            <label for="inputUser" class="col-md-2 control-label">设备名:  </label>
                             <div  class="col-md-6">
                                 <select class="select" name="vid">
                                     {volist name="links" id="vo" key="key"}
-                                    <option value={$vo.vid}>{$vo.vid}</option>
+                                    <option value={$vo.vid}>{$vo.vname}</option>
                                     {/volist}
                                 </select>
                             </div>
