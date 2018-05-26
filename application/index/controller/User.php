@@ -4,6 +4,9 @@ use app\index\model\Log;
 use app\index\model\Douglas;
 use app\index\model\Device;
 use app\index\model\UserModel;
+use app\user\model\UserInfo;
+use app\user\model\MailTemplate;
+use app\user\model\Mail;
 use think\Controller;
 use think\Db;
 use think\Session;
@@ -19,17 +22,23 @@ class User extends Controller
 	}
 
 	public function regist(){
-		$username=input("param.username");
-		$password=input("param.password");
-		$email=input("param.email");
-		$user=new UserModel;
-		$res=$user->regist($username,$password,$email);
-		$json=[];
-		if($res)
-			$json["success"]=1;
-		else
-			$json["success"]=0;
-		return json($json);
+		$report=[];
+        $username=input("username");
+        $password=input("password");
+        $email=input("email");
+        $newuser=new UserInfo($username,$password,$email);
+        $makeMail=new MailTemplate($username,$newuser->getToken());
+        $mail=new Mail($email,"激活",$makeMail->toSignup());
+        if($newuser->Save())
+        {
+            $mail->sendit();
+            $report["success"]=1;
+        }
+        else
+        {
+            $report["success"]=0;
+        }
+        return json($report);
 	}
 
 	public function searchHistoryPath(){
@@ -91,7 +100,7 @@ class User extends Controller
 		$meditation=input("param.meditation");
 		$speed=input("param.speed");
 		$battery=input("param.battery");
-		$res=$log->insert(md5($vid),$lat,$lon,$acc,$dir,$bpm,$attention,$meditation,$speed,$battery);
+		$res=$log->insert($vid,$lat,$lon,$acc,$dir,$bpm,$attention,$meditation,$speed,$battery);
 		$json=[];
 		if($res==1)
 			$json['success']=1;

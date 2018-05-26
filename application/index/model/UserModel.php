@@ -6,9 +6,16 @@ use think\Model;
 class UserModel extends Model
 {
 	public function login($username,$password){
+
+		$salt=Db::table("users")
+			->where('username',$username)
+			->field('salt')
+			->find();
+
+		$password=md5($password);
 		$res=Db::table("users")
 			->where('username',$username)
-			->where('password',md5($password))
+			->where('password',md5($password.$salt['salt']))
 			->find();
 
 		return $res;
