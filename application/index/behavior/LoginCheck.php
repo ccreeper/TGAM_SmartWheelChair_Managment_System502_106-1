@@ -9,6 +9,7 @@
 namespace app\index\behavior;
 
 use think\Session;
+use think\Request;
 
 class LoginCheck
 {
