@@ -49,7 +49,7 @@ class User extends Controller
 		$start=input("param.sdatetime");
 		$end=input("param.edatetime");	
 
-		$res=$log->getPos(md5($vid),$start,$end);
+		$res=$log->getPos($vid,$start,$end);
 		if(empty($res))
 			return;
 		$data=$douglas->compress($res,5);
